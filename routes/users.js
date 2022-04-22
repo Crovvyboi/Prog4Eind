@@ -3,8 +3,17 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-  res.send('This is a response');
+  var exampleArray = ["item", "item2"];
+  var exampleObject = {
+      item: "Bread",
+      item2: "Butter"
+  }
+  var json = JSON.stringify({
+      object: exampleObject,
+      array: exampleArray,
+      tekst: "JSON!! JSON!!"
+  });
+  res.end(json);
 });
 
 module.exports = router;
