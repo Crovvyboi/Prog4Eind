@@ -74,7 +74,7 @@ router.get('/users/id', function(req, res, next) {
   res.end(json);
 });
 
-router.patch('/users/update', function(req, res, next) {
+router.put('/users/update', function(req, res, next) {
   let sql = "Update User Set Firstname = ?, Lastname = ?, Street = ?, City = ?, isActive = ?, Email = ?, Phonenumber = ? " +
   "Where ID = ? And Password = ?";
 
