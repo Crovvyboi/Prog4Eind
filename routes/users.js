@@ -5,6 +5,10 @@ var router = express.Router();
 // Connect to db
 var db = require('../sqlite_db/db');
 
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'this API' });
+});
+
 /* GET user listing. */
 router.get('/users', function(req, res, next) {
   let sql = 'Select * From SelectAll';
@@ -23,7 +27,7 @@ router.get('/users', function(req, res, next) {
 });
 
 router.post('/users/post', function(req, res, next) {
-  let sql = "Insert Into User (ID, Firstname, Lastname, Street, City, isActive, Email, Password, Phonenumber) Values(?,?,?,?,?,?,?,?,?)";
+  let sql = "Insert Into User (ID, Firstname, Lastname, Street, City, isActive, Email, Password, Phonenumber) " + " Values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   db.run(sql, [req.body.id, req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber], function(err) {
     if (err) {
@@ -39,9 +43,7 @@ router.post('/users/post', function(req, res, next) {
 });
 
 router.get('/users/profile', function(req, res, next) {
-  let sql = 'Select * From SelectAll Where ID = ?';
-
-  db.all(sql, req.params.user_id, function(err, data) {
+  db.all("Select * From SelectAll Where ID = ?", req.params.user_id, function(err, data) {
     if (err) {
       console.log(err);
     }
@@ -57,9 +59,8 @@ router.get('/users/profile', function(req, res, next) {
 });
 
 router.get('/users/id', function(req, res, next) {
-  let sql = 'Select * From SelectAll Where ID = ?';
 
-  db.all(sql, req.body.id, function(err, data) {
+  db.all("Select * From SelectAll Where ID = ?", req.body.id, function(err, data) {
     if (err) {
       console.log(err);
     }
