@@ -11,7 +11,7 @@ router.get('/users', function(req, res, next) {
 
   db.all(sql, function(err, data) {
     if (err) {
-      console.log(err, "An error ocurred!");
+      console.log(err);
     }
     else{
       res.status(202).json(data);
@@ -22,22 +22,15 @@ router.get('/users', function(req, res, next) {
 router.post('/users/post', function(req, res, next) {
   let sql = "Insert Into User (ID, Firstname, Lastname, Street, City, isActive, Email, Password, Phonenumber) " + " Values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-  db.run(sql, [req.body.id, req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber], function(err, data) {
+  db.run(sql, [req.body.id, req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber], function(err) {
     if (err) {
-      console.log(err, "An error ocurred!");
+      console.log(err);
     }
     else{
-      if (data != "") {
-        res.json({
-          message: "Gebruiker kon niet geinsert worden"
-        });
-      }
-      else{
-        res.status(201).json({
-          status: "201",
-          message: "Inserted!"
-        });
-      }   
+      res.status(201).json({
+        status: "201",
+        message: "Inserted!"
+      });
     }
   });
 });
@@ -45,7 +38,7 @@ router.post('/users/post', function(req, res, next) {
 router.get('/users/profile', function(req, res, next) {
   db.get("Select * From User Where Email = ?", req.body.email, function(err, data) {
     if (err) {
-      console.log(err, "An error ocurred!");
+      console.log(err);
     }
     else{
       console.log("Functie nog niet gerealiseerd");
@@ -58,17 +51,10 @@ router.get('/users/id', function(req, res, next) {
 
   db.get("Select * From User Where ID = ?", req.body.id, function(err, data) {
     if (err) {
-      console.log(err, "An error ocurred!");
+      console.log(err);
     }
     else{
-      if (data != "") {
-        res.json({
-          message:"Gebruiker kon niet gevonden worden!"
-        });
-      }
-      else{
-        res.status(202).json(data);
-      }
+      res.status(202).json(data);
     }
   });
 });
@@ -77,22 +63,19 @@ router.put('/users/update', function(req, res, next) {
   let sql = "Update User Set Firstname = ?, Lastname = ?, Street = ?, City = ?, isActive = ?, Email = ?, Phonenumber = ? " +
   "Where ID = ? And Password = ?";
 
-  db.run(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.phonenumber, req.body.id, req.body.password], function(err, data) {
+  db.run(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.phonenumber, req.body.id, req.body.password], function(err) {
     if (err) {
-      console.log(err, "An error ocurred!");
+      console.log(err);
+      res.status(205).json({
+        status: "404",
+        message: "Failed to update!"
+      });
     }
     else{
-      if (data != "false") {
-        res.json({
-          message: "Gebruiker kon niet geupdate worden"
-        });
-      }
-      else{
-        res.status(205).json({
-          status: "205",
-          message: "Updated!"
-        });
-      }   
+      res.status(205).json({
+        status: "205",
+        message: "Updated!"
+      });
     }
   });
 });
@@ -101,22 +84,15 @@ router.delete('/users/remove', function(req, res, next) {
   let sql = "Delete From User " +
   "Where ID = ? And Password = ?";
 
-  db.run(sql, [req.body.id, req.body.password], function(err, data) {
+  db.run(sql, [req.body.id, req.body.password], function(err) {
     if (err) {
-      console.log(err, "An error ocurred!");
+      console.log(err);
     }
     else{
-      if (data != "") {
-        res.json({
-          message: "Gebruiker kon niet gedelete worden"
-        });
-      }
-      else{
-        res.status(206).json({
-          status: "206",
-          message: "Removed!"
-        });
-      } 
+      res.status(206).json({
+        status: "206",
+        message: "Removed!"
+      });
     }
   });
 });
