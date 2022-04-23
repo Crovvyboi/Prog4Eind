@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+// Connect to db
 var db = require('../sqlite_db/db');
 
 
