@@ -14,10 +14,7 @@ router.get('/users', function(req, res, next) {
       console.log(err);
     }
     else{
-      var json = JSON.stringify({
-        data
-      })
-      res.status(202).json(json);
+      res.status(202).json(data);
     }
   });
 });
@@ -39,7 +36,7 @@ router.post('/users/post', function(req, res, next) {
 });
 
 router.get('/users/profile', function(req, res, next) {
-  db.get("Select * From User Where ID = ?", [req.params.user_id], function(err, data) {
+  db.get("Select * From User Where ID = ?", req.params.user_id, function(err, data) {
     if (err) {
       console.log(err);
     }
@@ -51,7 +48,7 @@ router.get('/users/profile', function(req, res, next) {
 
 router.get('/users/id', function(req, res, next) {
 
-  db.get("Select * From User Where ID = ?", [req.body.id], function(err, data) {
+  db.get("Select * From User Where ID = ?", req.body.id, function(err, data) {
     if (err) {
       console.log(err);
     }
