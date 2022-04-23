@@ -15,7 +15,7 @@ const getjson = async url => {
     return data;
 }
 
-var userobj = JSON.parse(getjson);
+var userobj = JSON.parse(data);
 for (let index = 0; index < userobj[index] ; index++) {
     var query = "Insert Into User (ID, Firstname, Lastname, Street, City, isActive, Email, Password, Phonenumber)" +
     "Values("
