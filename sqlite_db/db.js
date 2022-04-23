@@ -1,3 +1,5 @@
+const { response } = require('../app');
+
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./sqlite_db/prog4eind_sqlitedb.db');
 
@@ -8,7 +10,7 @@ const response = fetch('https://shareameal-api.herokuapp.com/api/user', {
         'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
-})
+}).then(response => response.json()).then(data => console.log(data));
 
 var userobj = JSON.parse(response.json());
 for (let index = 0; index < userobj[index] ; index++) {
