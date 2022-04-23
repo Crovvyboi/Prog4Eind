@@ -1,17 +1,20 @@
 const { response } = require('../app');
+const fetch = require("node-fetch");
 
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./sqlite_db/prog4eind_sqlitedb.db');
 
 // Get users from shareameal api
-function Get(url){
-    var http = new XMLHttpRequest();
-    http.open("GET", url,false );
-    http.send(null);
-    return http.responseText;
+const getjson = async url => {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    const data = response.json();
+    return data;
 }
 
-var userobj = JSON.parse(Get('https://shareameal-api.herokuapp.com/api/user'));
+var userobj = JSON.parse(data);
 for (let index = 0; index < userobj[index] ; index++) {
     var query = "Insert Into User (ID, Firstname, Lastname, Street, City, isActive, Email, Password, Phonenumber)" +
     "Values("
