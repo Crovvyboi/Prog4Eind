@@ -20,7 +20,7 @@ var schema = {
 }
 
 /* GET user listing. */
-router.get('/user', function(req, res, next) {
+router.get('/users', function(req, res, next) {
   let sql = 'Select * From SelectAll';
 
   db.all(sql, function(err, data) {
@@ -36,23 +36,24 @@ router.get('/user', function(req, res, next) {
   })
 });
 
-router.get('/users', function(req, res, next) {
-  let sql = 'Select * From SelectAll';
+router.post('/users/post', function(req, res, next) {
+  let sql = "Insert Into User (ID, Firstname, Lastname, Street, City, isActive, Email, Password, Phonenumber)" +
+  "Values(?,?,?,?,?,?,?,?,?)";
 
-  db.all(sql, function(err, data) {
+  db.run(sql, [req.body.ID, req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber], function(err) {
     if (err) {
       debug.log(err);
     }
     else{
-      var json = JSON.stringify({
-        data
-      })
-      res.status(202).end(json);
+      res.status(201).json({
+        status: "201",
+        message: "Inserted!"
+      });
     }
   })
 });
 
-router.get('/users?id', function(req, res, next) {
+router.get('/users/id', function(req, res, next) {
   let sql = 'Select * From SelectAll';
 
   res.end(json);
