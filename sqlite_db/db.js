@@ -1,7 +1,7 @@
 const { response } = require('../app');
 // const bodyparser = require("body-parser");
 
-app.use(bodyparser.json());
+// app.use(bodyparser.json());
 
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./sqlite_db/prog4eind_sqlitedb.db');
