@@ -4,6 +4,19 @@ var router = express.Router();
 // Connect to db
 var db = require('../sqlite_db/db');
 
+var schema = {
+  "User":[
+    "ID",
+    "Firstname",
+    "Insertion",
+    "Lastname",
+    "Street",
+    "Email",
+    "Phonenumber",
+    "Password",
+    "Role"
+  ]
+}
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -34,8 +47,27 @@ router.get('/user', function(req, res, next) {
   res.end(json);
 });
 
-router.get('/user', function(req, res, next) {
+router.get('/users', function(req, res, next) {
   let sql = 'Select * From SelectAll';
+  let data = {};
+
+  db.all(sql, function(err, rows){
+    if (err) {
+      throw(err);
+    }
+    rows.forEach(function(row){
+      data[row.id] = {};
+      Object.keys(row).forEach(function(k){
+        data[row.id][k] = unescape(row[k]);
+      });
+    });
+    res.end(data)
+  })
+});
+
+router.get('/users?id', function(req, res, next) {
+  let sql = 'Select * From SelectAll';
+
   res.end(json);
 });
 
