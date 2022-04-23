@@ -33,27 +33,27 @@
             }
           },
           {
-            "name": "name",
+            "name": "firstname",
             "in": "query",
-            "description": "name of the user",
+            "description": "first name of the user",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "adress",
+            "name": "insertion",
             "in": "query",
-            "description": "adress of the user",
+            "description": "insertion of the users name",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "birthday",
+            "name": "lastname",
             "in": "query",
-            "description": "birthday of the user",
+            "description": "last name of the user",
             "required": true,
             "schema": {
               "type": "string"
@@ -113,22 +113,22 @@
         "type": "object",
         "required": [
           "id",
-          "name",
-          "adress",
-          "birthday"
+          "firstname",
+          "insertion",
+          "lastname"
         ],
         "properties": {
           "id": {
             "type": "integer",
             "format": "int64"
           },
-          "name": {
+          "firstname": {
             "type": "string"
           },
-          "adress":{
+          "insertion":{
               "type": "string"
           },
-          "birthday":{
+          "lastname":{
               "type": "string"
           }
         }
