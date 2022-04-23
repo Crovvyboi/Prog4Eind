@@ -55,8 +55,7 @@ router.get('/users/id', function(req, res, next) {
     }
     else{
       if (data != "") {
-        res.end("Gebruiker kon niet gevonden worden!");
-
+        res.write("Gebruiker kon niet gevonden worden!");
       }
       else{
         res.status(202).json(data);
@@ -75,7 +74,7 @@ router.put('/users/update', function(req, res, next) {
     }
     else{
       if (data != "") {
-        res.end("Gebruiker kon niet geupdate worden");
+        res.write("Gebruiker kon niet geupdate worden");
       }
       else{
         res.status(205).json({
@@ -97,7 +96,7 @@ router.delete('/users/remove', function(req, res, next) {
     }
     else{
       if (data != "") {
-        res.end("Gebruiker kon niet gedelete worden");
+        res.write("Gebruiker kon niet gedelete worden");
       }
       else{
         res.status(206).json({
