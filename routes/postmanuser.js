@@ -3,8 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-
+router.get('/user', function(req, res, next) {
   var exampleArray = ["item", "item2"];
   var exampleObject = {
       item: "Bread",
