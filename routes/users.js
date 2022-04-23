@@ -5,20 +5,6 @@ var router = express.Router();
 // Connect to db
 var db = require('../sqlite_db/db');
 
-var schema = {
-  "User":[
-    "ID",
-    "Firstname",
-    "Insertion",
-    "Lastname",
-    "Street",
-    "Email",
-    "Phonenumber",
-    "Password",
-    "Role"
-  ]
-}
-
 /* GET user listing. */
 router.get('/users', function(req, res, next) {
   let sql = 'Select * From SelectAll';
@@ -33,7 +19,7 @@ router.get('/users', function(req, res, next) {
       })
       res.status(202).json(json);
     }
-  })
+  });
 });
 
 router.post('/users/post', function(req, res, next) {
@@ -49,13 +35,77 @@ router.post('/users/post', function(req, res, next) {
         message: "Inserted!"
       });
     }
+  });
+});
+
+router.get('/users/profile', function(req, res, next) {
+  let sql = 'Select * From SelectAll Where ID = ?';
+
+  db.all(sql, req.params.user_id, function(err, data) {
+    if (err) {
+      console.log(err);
+    }
+    else{
+      var json = JSON.stringify({
+        data
+      })
+      res.status(203).json(json);
+    }
   })
+
+  res.end(json);
 });
 
 router.get('/users/id', function(req, res, next) {
-  let sql = 'Select * From SelectAll';
+  let sql = 'Select * From SelectAll Where ID = ?';
+
+  db.all(sql, req.body.id, function(err, data) {
+    if (err) {
+      console.log(err);
+    }
+    else{
+      var json = JSON.stringify({
+        data
+      })
+      res.status(204).json(json);
+    }
+  })
 
   res.end(json);
+});
+
+router.patch('/users/update', function(req, res, next) {
+  let sql = "Update User Set Firstname = ?, Lastname = ?, Street = ?, City = ?, isActive = ?, Email = ?, Phonenumber = ? " +
+  "Where ID = ? And Password = ?";
+
+  db.run(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.phonenumber, req.body.id, req.body.password], function(err) {
+    if (err) {
+      console.log(err);
+    }
+    else{
+      res.status(201).json({
+        status: "205",
+        message: "Updated!"
+      });
+    }
+  });
+});
+
+router.delete('/users/update', function(req, res, next) {
+  let sql = "Delete From User " +
+  "Where ID = ? And Password = ?";
+
+  db.run(sql, [req.body.id, req.body.password], function(err) {
+    if (err) {
+      console.log(err);
+    }
+    else{
+      res.status(201).json({
+        status: "206",
+        message: "Removed!"
+      });
+    }
+  });
 });
 
 module.exports = router;
