@@ -28,7 +28,7 @@ router.post('/users/post', function(req, res, next) {
     }
     else{
       if (data != "") {
-        res.send({
+        res.json({
           message: "Gebruiker kon niet geinsert worden"
         });
       }
@@ -62,7 +62,7 @@ router.get('/users/id', function(req, res, next) {
     }
     else{
       if (data != "") {
-        res.send({
+        res.json({
           message:"Gebruiker kon niet gevonden worden!"
         });
       }
@@ -83,7 +83,7 @@ router.put('/users/update', function(req, res, next) {
     }
     else{
       if (data != "") {
-        res.send({
+        res.json({
           message: "Gebruiker kon niet geupdate worden"
         });
       }
@@ -107,7 +107,7 @@ router.delete('/users/remove', function(req, res, next) {
     }
     else{
       if (data != "") {
-        res.send({
+        res.json({
           message: "Gebruiker kon niet gedelete worden"
         });
       }
