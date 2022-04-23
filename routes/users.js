@@ -49,9 +49,7 @@ router.get('/users/profile', function(req, res, next) {
       })
       res.status(203).json(json);
     }
-  })
-
-  res.end(json);
+  });
 });
 
 router.get('/users/id', function(req, res, next) {
@@ -66,9 +64,7 @@ router.get('/users/id', function(req, res, next) {
       })
       res.status(204).json(json);
     }
-  })
-
-  res.end(json);
+  });
 });
 
 router.put('/users/update', function(req, res, next) {
