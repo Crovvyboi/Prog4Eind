@@ -25,6 +25,10 @@ router.post('/users/post', function(req, res, next) {
   db.run(sql, [req.body.id, req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber], function(err) {
     if (err) {
       console.log(err);
+      res.status(500).json({
+        status: "500",
+        message: "Failed to insert!"
+      });
     }
     else{
       res.status(201).json({
@@ -39,6 +43,7 @@ router.get('/users/profile', function(req, res, next) {
   db.get("Select * From User Where Email = ?", req.body.email, function(err, data) {
     if (err) {
       console.log(err);
+      
     }
     else{
       console.log("Functie nog niet gerealiseerd");
@@ -52,6 +57,10 @@ router.get('/users/id', function(req, res, next) {
   db.get("Select * From User Where ID = ?", req.body.id, function(err, data) {
     if (err) {
       console.log(err);
+      res.status(500).json({
+        status: "500",
+        message: "Failed to get user!"
+      });
     }
     else{
       res.status(202).json(data);
@@ -68,8 +77,7 @@ router.put('/users/update', function(req, res, next) {
       console.log(err);
       res.status(500).json({
         status: "500",
-        message: "Failed to update!",
-        err
+        message: "Failed to update!"
       });
     }
     else{
@@ -88,6 +96,10 @@ router.delete('/users/remove', function(req, res, next) {
   db.run(sql, [req.body.id, req.body.password], function(err) {
     if (err) {
       console.log(err);
+      res.status(500).json({
+        status: "500",
+        message: "Failed to delete!"
+      });
     }
     else{
       res.status(206).json({
