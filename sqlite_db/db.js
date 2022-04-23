@@ -6,7 +6,7 @@ var db = new sqlite3.Database('./sqlite_db/prog4eind_sqlitedb.db');
 
 // Get users from shareameal api
 const getjson = async url => {
-    const response = await fetch("https://shareameal-api.herokuapp.com/api.user");
+    const response = await fetch("https://shareameal-api.herokuapp.com/api/user");
     if (!response.ok) {
         throw new Error(response.statusText);
     }
