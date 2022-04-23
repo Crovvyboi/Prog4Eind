@@ -4,15 +4,14 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./sqlite_db/prog4eind_sqlitedb.db');
 
 // Get users from shareameal api
-fetch('https://shareameal-api.herokuapp.com/api/user', {
-    method: 'GET',
-    headers:{
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-}).then(response => response.json()).then(data => console.log(data));
+function Get(url){
+    var http = new XMLHttpRequest();
+    http.open("GET", url,false );
+    http.send(null);
+    return http.responseText;
+}
 
-var userobj = JSON.parse(response.json());
+var userobj = JSON.parse(Get('https://shareameal-api.herokuapp.com/api/user'));
 for (let index = 0; index < userobj[index] ; index++) {
     var query = "Insert Into User (ID, Firstname, Lastname, Street, City, isActive, Email, Password, Phonenumber)" +
     "Values("
