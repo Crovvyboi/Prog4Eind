@@ -22,7 +22,7 @@ router.get('/users', function(req, res, next) {
 router.post('/users/post', function(req, res, next) {
   let sql = "Insert Into User (ID, Firstname, Lastname, Street, City, isActive, Email, Password, Phonenumber) " + " Values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-  db.run(sql, [req.body.id, req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber], function(err) {
+  db.run(sql, [req.body.id, req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber], function(err, data) {
     if (err) {
       console.log(err, "An error ocurred!");
     }
@@ -82,7 +82,7 @@ router.put('/users/update', function(req, res, next) {
       console.log(err, "An error ocurred!");
     }
     else{
-      if (data != "") {
+      if (data != "false") {
         res.json({
           message: "Gebruiker kon niet geupdate worden"
         });
@@ -101,7 +101,7 @@ router.delete('/users/remove', function(req, res, next) {
   let sql = "Delete From User " +
   "Where ID = ? And Password = ?";
 
-  db.run(sql, [req.body.id, req.body.password], function(err) {
+  db.run(sql, [req.body.id, req.body.password], function(err, data) {
     if (err) {
       console.log(err, "An error ocurred!");
     }
