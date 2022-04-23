@@ -91,7 +91,7 @@ router.patch('/users/update', function(req, res, next) {
   });
 });
 
-router.delete('/users/update', function(req, res, next) {
+router.delete('/users/remove', function(req, res, next) {
   let sql = "Delete From User " +
   "Where ID = ? And Password = ?";
 
