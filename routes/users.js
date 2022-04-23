@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var db = require('./sqlite_db/db');
+var db = require('./sqlite_db/db.js');
 
 
 /* GET users listing. */
@@ -34,7 +34,7 @@ router.get('/user', function(req, res, next) {
 });
 
 router.get('/user', function(req, res, next) {
-  let sql = 'Select * From SelectAll'
+  let sql = 'Select * From SelectAll';
   res.end(json);
 });
 
