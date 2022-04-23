@@ -41,7 +41,7 @@ router.get('/users/profile', function(req, res, next) {
       console.log(err);
     }
     else{
-      res.status(203).json(data);
+      res.status(202).json(data);
     }
   });
 });
@@ -53,7 +53,7 @@ router.get('/users/id', function(req, res, next) {
       console.log(err);
     }
     else{
-      res.status(204).json(data);
+      res.status(202).json(data);
     }
   });
 });
@@ -67,7 +67,7 @@ router.put('/users/update', function(req, res, next) {
       console.log(err);
     }
     else{
-      res.status(201).json({
+      res.status(205).json({
         status: "205",
         message: "Updated!"
       });
@@ -84,7 +84,7 @@ router.delete('/users/remove', function(req, res, next) {
       console.log(err);
     }
     else{
-      res.status(201).json({
+      res.status(206).json({
         status: "206",
         message: "Removed!"
       });
