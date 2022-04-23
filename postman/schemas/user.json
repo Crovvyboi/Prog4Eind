@@ -12,7 +12,8 @@
       "url": "localhost:3000"
     }
   ],
-  "paths": {
+  "paths": 
+  {
     "/user": {
       "get": {
         "summary": "Details about a user",
@@ -29,6 +30,33 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "name of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "adress",
+            "in": "query",
+            "description": "adress of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "birthday",
+            "in": "query",
+            "description": "birthday of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -63,15 +91,31 @@
           }
         }
       }
+    },
+    "/user#userID": {
+
+    },
+    "/user/register": {
+        
+    },
+    "/user/update": {
+
+    },
+    "/user/remove": {
+
     }
-  },
+    
+  }
+  ,
   "components": {
     "schemas": {
       "User": {
         "type": "object",
         "required": [
           "id",
-          "name"
+          "name",
+          "adress",
+          "birthday"
         ],
         "properties": {
           "id": {
@@ -81,23 +125,26 @@
           "name": {
             "type": "string"
           },
-          "tag": {
-            "type": "string"
+          "adress":{
+              "type": "string"
+          },
+          "birthday":{
+              "type": "string"
           }
         }
       },
       "Error": {
         "type": "object",
         "required": [
-          "code",
-          "message"
+          "id",
+          "description"
         ],
         "properties": {
-          "code": {
+          "id": {
             "type": "integer",
             "format": "int32"
           },
-          "message": {
+          "description": {
             "type": "string"
           }
         }
