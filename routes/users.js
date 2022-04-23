@@ -54,25 +54,16 @@ router.get('/users/profile', function(req, res, next) {
 
 router.get('/users/id', function(req, res, next) {
 
-  db.get("Select * From User Where ID = ?", req.body.id, function(err, data, rows) {
+  db.get("Select * From User Where ID = ?", req.body.id, function(err, data) {
     if (err) {
       console.log(err);
-      return res.status(500).json({
+      res.status(500).json({
         status: "500",
         message: "Failed to get user!"
       });
     }
     else{
-      if (rows === 0) {
-        return res.status(202).json({
-          status: "202",
-          message: "no user!"
-        });
-      }
-      else{
-        return res.status(202).json(data);
-      }
-
+      res.status(202).json(data);
     }
   });
 });
