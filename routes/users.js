@@ -54,9 +54,8 @@ router.get('/users/id', function(req, res, next) {
       console.log(err, "An error ocurred!");
     }
     else{
-      var json = data;
-      if (json != null) {
-        res.status(202).json(json);
+      if (data != "") {
+        res.status(202).json(data);
       }
       else{
         console.log("Geen users gedetecteerd!");
@@ -74,7 +73,7 @@ router.put('/users/update', function(req, res, next) {
       console.log(err, "An error ocurred!");
     }
     else{
-      res.status(205).json({
+        res.status(205).json({
         status: "205",
         message: "Updated!"
       });
