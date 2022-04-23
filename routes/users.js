@@ -61,8 +61,8 @@ router.get('/users', function(req, res, next) {
         data[row.id][k] = unescape(row[k]);
       });
     });
-    res.end(data)
-  })
+    res.end(data);
+  });
 });
 
 router.get('/users?id', function(req, res, next) {
