@@ -36,7 +36,7 @@ router.post('/users/post', function(req, res, next) {
 });
 
 router.get('/users/profile', function(req, res, next) {
-  db.get("Select * From User Where ID = ?", req.query.params.user_id, function(err, data) {
+  db.get("Select * From User Where Email = ?", req.body.email, function(err, data) {
     if (err) {
       console.log(err);
     }
