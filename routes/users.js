@@ -11,7 +11,7 @@ router.get('/users', function(req, res, next) {
 
   db.all(sql, function(err, data) {
     if (err) {
-      console.log(err);
+      console.log(err, "An error ocurred!");
     }
     else{
       res.status(202).json(data);
@@ -24,7 +24,7 @@ router.post('/users/post', function(req, res, next) {
 
   db.run(sql, [req.body.id, req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber], function(err) {
     if (err) {
-      console.log(err);
+      console.log(err, "An error ocurred!");
     }
     else{
       res.status(201).json({
@@ -38,9 +38,10 @@ router.post('/users/post', function(req, res, next) {
 router.get('/users/profile', function(req, res, next) {
   db.get("Select * From User Where Email = ?", req.body.email, function(err, data) {
     if (err) {
-      console.log(err);
+      console.log(err, "An error ocurred!");
     }
     else{
+      console.log("Functie nog niet gerealiseerd");
       res.status(202).json(data);
     }
   });
@@ -50,10 +51,16 @@ router.get('/users/id', function(req, res, next) {
 
   db.get("Select * From User Where ID = ?", req.body.id, function(err, data) {
     if (err) {
-      console.log(err);
+      console.log(err, "An error ocurred!");
     }
     else{
-      res.status(202).json(data);
+      var json = data;
+      if (json != null) {
+        res.status(202).json(json);
+      }
+      else{
+        console.log("Geen users gedetecteerd!");
+      }
     }
   });
 });
@@ -64,7 +71,7 @@ router.put('/users/update', function(req, res, next) {
 
   db.run(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.phonenumber, req.body.id, req.body.password], function(err) {
     if (err) {
-      console.log(err);
+      console.log(err, "An error ocurred!");
     }
     else{
       res.status(205).json({
@@ -81,7 +88,7 @@ router.delete('/users/remove', function(req, res, next) {
 
   db.run(sql, [req.body.id, req.body.password], function(err) {
     if (err) {
-      console.log(err);
+      console.log(err, "An error ocurred!");
     }
     else{
       res.status(206).json({
