@@ -54,7 +54,7 @@ router.get('/users/profile', function(req, res, next) {
 
 router.get('/users/id', function(req, res, next) {
 
-  db.get("Select * From User Where ID = ?", req.body.id, function(err, data) {
+  db.get("Select * From User Where ID = ?", req.body.id, function(err, data, rows) {
     if (err) {
       console.log(err);
       return res.status(500).json({
@@ -63,7 +63,16 @@ router.get('/users/id', function(req, res, next) {
       });
     }
     else{
-      return res.status(202).json(data);
+      if (rows === 0) {
+        return res.status(202).json({
+          status: "202",
+          message: "no user!"
+        });
+      }
+      else{
+        return res.status(202).json(data);
+      }
+
     }
   });
 });
