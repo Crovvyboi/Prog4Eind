@@ -5,10 +5,6 @@ var router = express.Router();
 // Connect to db
 var db = require('../sqlite_db/db');
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'this API' });
-});
-
 /* GET user listing. */
 router.get('/users', function(req, res, next) {
   let sql = 'Select * From SelectAll';
