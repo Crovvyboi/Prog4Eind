@@ -51,7 +51,7 @@ router.get('/user', function(req, res, next) {
 router.get('/users', function(req, res, next) {
   let sql = 'Select * From SelectAll';
 
-  db.all(sql, function(error, data) {
+  db.all(sql, function(err, data) {
     if (err) {
       debug.log(err);
     }
