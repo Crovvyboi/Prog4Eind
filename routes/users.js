@@ -7,7 +7,7 @@ var db = require('../sqlite_db/db');
 
 /* GET user listing. */
 router.get('/users', function(req, res, next) {
-  let sql = 'Select * From SelectAll';
+  let sql = 'Select * From User';
 
   db.all(sql, function(err, data) {
     if (err) {
@@ -39,7 +39,7 @@ router.post('/users/post', function(req, res, next) {
 });
 
 router.get('/users/profile', function(req, res, next) {
-  db.all("Select * From SelectAll Where ID = ?", req.params.user_id, function(err, data) {
+  db.all("Select * From User Where ID = ?", req.params.user_id, function(err, data) {
     if (err) {
       console.log(err);
     }
@@ -54,7 +54,7 @@ router.get('/users/profile', function(req, res, next) {
 
 router.get('/users/id', function(req, res, next) {
 
-  db.all("Select * From SelectAll Where ID = ?", req.body.id, function(err, data) {
+  db.all("Select * From User Where ID = ?", req.body.id, function(err, data) {
     if (err) {
       console.log(err);
     }
