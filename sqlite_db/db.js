@@ -1,16 +1,18 @@
 const { response } = require('../app');
-// const fetch = require("node-fetch");
+const fetch = require("node-fetch");
 
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./sqlite_db/prog4eind_sqlitedb.db');
 
+const data = {};
+
 // Get users from shareameal api
-const getjson = async url => {
+data = async url => {
     const response = await fetch("https://shareameal-api.herokuapp.com/api/user");
     if (!response.ok) {
         throw new Error(response.statusText);
     }
-    const data = response.json();
+    var data = response.json();
     console.log(data);
     return data;
 }
