@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var jsonuserRouter = require('./postman/schemas/user.json');
+var jsonuserRouter = require('./routes/postmanuser');
 
 var app = express();
 
