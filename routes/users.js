@@ -19,33 +19,21 @@ var schema = {
   ]
 }
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  var exampleArray = ["item", "item2"];
-  var exampleObject = {
-      item: "Bread",
-      item2: "Butter"
-  }
-  var json = JSON.stringify({
-      object: exampleObject,
-      array: exampleArray,
-      tekst: "JSON!! JSON!!"
-  });
-  res.end(json);
-});
-
+/* GET user listing. */
 router.get('/user', function(req, res, next) {
-  var exampleArray = ["user", "user2"];
-  var exampleObject = {
-      item: "Userbread",
-      item2: "Userbutter"
-  }
-  var json = JSON.stringify({
-      object: exampleObject,
-      array: exampleArray,
-      tekst: "JSON!! JSON!!"
-  });
-  res.end(json);
+  let sql = 'Select * From SelectAll';
+
+  db.all(sql, function(err, data) {
+    if (err) {
+      debug.log(err);
+    }
+    else{
+      var json = JSON.stringify({
+        data
+      })
+      res.status(202).json(json);
+    }
+  })
 });
 
 router.get('/users', function(req, res, next) {
@@ -59,7 +47,7 @@ router.get('/users', function(req, res, next) {
       var json = JSON.stringify({
         data
       })
-      res.end(json);
+      res.status(202).end(json);
     }
   })
 });
