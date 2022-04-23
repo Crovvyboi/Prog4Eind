@@ -2,7 +2,7 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./sqlite_db/prog4eind_sqlitedb.db');
 
 // Get users from shareameal api
-const response = await fetch('https://shareameal-api.herokuapp.com/api/user', {
+const response = fetch('https://shareameal-api.herokuapp.com/api/user', {
     method: 'GET',
     headers:{
         'Content-Type': 'application/json'
