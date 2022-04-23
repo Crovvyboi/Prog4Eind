@@ -39,7 +39,7 @@ router.post('/users/post', function(req, res, next) {
 });
 
 router.get('/users/profile', function(req, res, next) {
-  db.all("Select * From User Where ID = ?", req.params.user_id, function(err, data) {
+  db.all("Select * From User Where ID = ?", [req.params.user_id], function(err, data) {
     if (err) {
       console.log(err);
     }
@@ -54,7 +54,7 @@ router.get('/users/profile', function(req, res, next) {
 
 router.get('/users/id', function(req, res, next) {
 
-  db.all("Select * From User Where ID = ?", req.body.id, function(err, data) {
+  db.all("Select * From User Where ID = ?", [req.body.id], function(err, data) {
     if (err) {
       console.log(err);
     }
