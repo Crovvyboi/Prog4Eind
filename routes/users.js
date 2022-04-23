@@ -51,18 +51,7 @@ router.get('/users', function(req, res, next) {
   let sql = 'Select * From SelectAll';
   let data = {};
 
-  db.all(sql, function(err, rows){
-    if (err) {
-      throw(err);
-    }
-    rows.forEach(function(row){
-      data[row.id] = {};
-      Object.keys(row).forEach(function(k){
-        data[row.id][k] = unescape(row[k]);
-      });
-    });
-    res.end(data);
-  });
+  res.end(db.all(sql));
 });
 
 router.get('/users?id', function(req, res, next) {
