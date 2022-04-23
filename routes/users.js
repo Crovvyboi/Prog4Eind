@@ -58,7 +58,7 @@ router.get('/users/id', function(req, res, next) {
         res.status(202).json(data);
       }
       else{
-        console.log("Geen users gedetecteerd!");
+        res.end("Gebruiker kon niet gevonden worden!");
       }
     }
   });
@@ -68,11 +68,14 @@ router.put('/users/update', function(req, res, next) {
   let sql = "Update User Set Firstname = ?, Lastname = ?, Street = ?, City = ?, isActive = ?, Email = ?, Phonenumber = ? " +
   "Where ID = ? And Password = ?";
 
-  db.run(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.phonenumber, req.body.id, req.body.password], function(err) {
+  db.run(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.phonenumber, req.body.id, req.body.password], function(err, data) {
     if (err) {
       console.log(err, "An error ocurred!");
     }
     else{
+      if (data != "") {
+        res.end("Gebruiker kon niet geupdate worden");
+      }
         res.status(205).json({
         status: "205",
         message: "Updated!"
