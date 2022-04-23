@@ -63,10 +63,13 @@ router.get('/users/id', function(req, res, next) {
       });
     }
     else{
-      if (data = "") {
-        res.status(202).json({message : "no data found"});
+      if (res.rows.length == 0) {
+        res.status(500).json({message : "failed to get user"})
       }
-      res.status(202).json(data);
+      else{
+        res.status(202).json(data);
+      }
+
     }
   });
 });
