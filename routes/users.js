@@ -66,9 +66,10 @@ router.put('/users/update', function(req, res, next) {
   db.run(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.email, req.body.phonenumber, req.body.id, req.body.password], function(err) {
     if (err) {
       console.log(err);
-      res.status(205).json({
-        status: "404",
-        message: "Failed to update!"
+      res.status(500).json({
+        status: "500",
+        message: "Failed to update!",
+        err
       });
     }
     else{
