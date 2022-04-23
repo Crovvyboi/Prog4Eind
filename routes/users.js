@@ -55,10 +55,11 @@ router.get('/users/id', function(req, res, next) {
     }
     else{
       if (data != "") {
-        res.status(202).json(data);
+        res.end("Gebruiker kon niet gevonden worden!");
+
       }
       else{
-        res.end("Gebruiker kon niet gevonden worden!");
+        res.status(202).json(data);
       }
     }
   });
@@ -76,10 +77,12 @@ router.put('/users/update', function(req, res, next) {
       if (data != "") {
         res.end("Gebruiker kon niet geupdate worden");
       }
+      else{
         res.status(205).json({
-        status: "205",
-        message: "Updated!"
-      });
+          status: "205",
+          message: "Updated!"
+        });
+      }   
     }
   });
 });
@@ -93,10 +96,15 @@ router.delete('/users/remove', function(req, res, next) {
       console.log(err, "An error ocurred!");
     }
     else{
-      res.status(206).json({
-        status: "206",
-        message: "Removed!"
-      });
+      if (data != "") {
+        res.end("Gebruiker kon niet gedelete worden");
+      }
+      else{
+        res.status(206).json({
+          status: "206",
+          message: "Removed!"
+        });
+      } 
     }
   });
 });
