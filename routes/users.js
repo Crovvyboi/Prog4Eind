@@ -57,19 +57,13 @@ router.get('/users/id', function(req, res, next) {
   db.get("Select * From User Where ID = ?", req.body.id, function(err, data) {
     if (err) {
       console.log(err);
-      res.status(500).json({
+      return res.status(500).json({
         status: "500",
         message: "Failed to get user!"
       });
     }
     else{
-      if (res.rows.length == 0) {
-        res.status(500).json({message : "failed to get user"})
-      }
-      else{
-        res.status(202).json(data);
-      }
-
+      return res.status(202).json(data);
     }
   });
 });
