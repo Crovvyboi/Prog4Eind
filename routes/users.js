@@ -57,7 +57,7 @@ router.get('/users', function(req, res, next) {
     }
     else{
       var json = JSON.stringify({
-        users: data
+        data
       })
       res.end(json);
     }
