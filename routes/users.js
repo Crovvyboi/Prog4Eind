@@ -44,10 +44,7 @@ router.get('/users/profile', function(req, res, next) {
       console.log(err);
     }
     else{
-      var json = JSON.stringify({
-        data
-      })
-      res.status(203).json(json);
+      res.status(203).json(data);
     }
   });
 });
@@ -59,10 +56,7 @@ router.get('/users/id', function(req, res, next) {
       console.log(err);
     }
     else{
-      var json = JSON.stringify({
-        data
-      })
-      res.status(204).json(json);
+      res.status(204).json(data);
     }
   });
 });
