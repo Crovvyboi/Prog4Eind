@@ -56,7 +56,10 @@ router.get('/users', function(req, res, next) {
       debug.log(err);
     }
     else{
-      res.end(json(data));
+      var json = JSON.stringify({
+        users: data
+      })
+      res.end(json);
     }
   })
 });
