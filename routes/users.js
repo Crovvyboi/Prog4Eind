@@ -1,4 +1,5 @@
 var express = require('express');
+const { json } = require('express/lib/response');
 var router = express.Router();
 
 // Connect to db
@@ -49,9 +50,15 @@ router.get('/user', function(req, res, next) {
 
 router.get('/users', function(req, res, next) {
   let sql = 'Select * From SelectAll';
-  let data = {};
 
-  res.end(db.all(sql));
+  db.all(sql, function(error, data) {
+    if (err) {
+      debug.log(err);
+    }
+    else{
+      res.end(json(data));
+    }
+  })
 });
 
 router.get('/users?id', function(req, res, next) {
