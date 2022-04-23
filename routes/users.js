@@ -27,10 +27,17 @@ router.post('/users/post', function(req, res, next) {
       console.log(err, "An error ocurred!");
     }
     else{
-      res.status(201).json({
-        status: "201",
-        message: "Inserted!"
-      });
+      if (data = "") {
+        res.send({
+          message: "Gebruiker kon niet geinsert worden"
+        });
+      }
+      else{
+        res.status(201).json({
+          status: "201",
+          message: "Inserted!"
+        });
+      }   
     }
   });
 });
@@ -54,8 +61,10 @@ router.get('/users/id', function(req, res, next) {
       console.log(err, "An error ocurred!");
     }
     else{
-      if (data != "") {
-        res.write("Gebruiker kon niet gevonden worden!");
+      if (data = "") {
+        res.send({
+          message:"Gebruiker kon niet gevonden worden!"
+        });
       }
       else{
         res.status(202).json(data);
@@ -73,8 +82,10 @@ router.put('/users/update', function(req, res, next) {
       console.log(err, "An error ocurred!");
     }
     else{
-      if (data != "") {
-        res.write("Gebruiker kon niet geupdate worden");
+      if (data = "") {
+        res.send({
+          message: "Gebruiker kon niet geupdate worden"
+        });
       }
       else{
         res.status(205).json({
@@ -95,8 +106,10 @@ router.delete('/users/remove', function(req, res, next) {
       console.log(err, "An error ocurred!");
     }
     else{
-      if (data != "") {
-        res.write("Gebruiker kon niet gedelete worden");
+      if (data = "") {
+        res.send({
+          message: "Gebruiker kon niet gedelete worden"
+        });
       }
       else{
         res.status(206).json({
