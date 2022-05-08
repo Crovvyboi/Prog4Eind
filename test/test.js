@@ -7,22 +7,6 @@ let assert = require('assert').strict;
 const {expect} = chai;
 chai.use(chaiHTTP);
 
-describe('Assert testing', function() {
-    describe('indexof', function() {
-        it('should return -1 when the value is not present', function() {
-            assert.equal([1,2,3].indexOf(4), -1);
-        });
-    });
-
-    describe('double done', function() {
-        it('double done', function(done) {
-            setImmediate(done);
-            // setImmediate(done);
-            
-        });
-    });
-});
-
 describe('Assert API', function() {
     describe('Call api functions', function () {
         it('/api/users', function(done) {
