@@ -12,7 +12,7 @@ describe('Assert API', function() {
         it('/api/users', function(done) {
             chai
             .request(app)
-            .get('/api/users')
+            .put('/api/users')
             .end((err, res) => {
                 if (err) {
                     done(err);
