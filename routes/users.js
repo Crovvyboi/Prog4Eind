@@ -1,6 +1,7 @@
 var express = require('express');
 const { json } = require('express/lib/response');
 var router = express.Router();
+module.exports = router;
 
 // Connect to db
 var db = require('../sqlite_db/db');
@@ -18,6 +19,7 @@ router.get('/users', function(req, res, next) {
     }
   });
 });
+
 
 router.post('/users/post', function(req, res, next) {
   let sql = "Insert Into User (ID, Firstname, Lastname, Street, City, isActive, Email, Password, Phonenumber) " + " Values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -43,7 +45,6 @@ router.get('/users/profile', function(req, res, next) {
   db.get("Select * From User Where Email = ?", req.body.email, function(err, data) {
     if (err) {
       console.log(err);
-      
     }
     else{
       console.log("Functie nog niet gerealiseerd");
