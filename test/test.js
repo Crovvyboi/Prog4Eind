@@ -112,7 +112,7 @@ describe('Assert API', function() {
         it('/api/users/remove', function(done) {
             chai
             .request(app)
-            .get('/api/users/remove')
+            .del('/api/users/remove')
              .send(deleteUser)
             .end((err, res) => {
                 if (err) {
