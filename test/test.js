@@ -91,7 +91,6 @@ describe('Assert API', function() {
             "lastname": "Doe",
             "isActive": true,
             "emails": "this2@email.com",
-            "password": "pw",
             "phonenumber": "87 654321",
             "roles":  "guest",
             "street": "Street 10",
