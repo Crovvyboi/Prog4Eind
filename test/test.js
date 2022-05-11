@@ -28,12 +28,12 @@ describe('Assert API', function() {
         });
 
         const newUser = {
-            "firstName": "John",
-            "lastName": "Doe",
+            "firstname": "John",
+            "lastname": "Doe",
             "isActive": false,
-            "emailAdress": "this2@email.com",
+            "email": "this2@email.com",
             "password": "pw",
-            "phoneNumber": "87 654321",
+            "phonenumber": "87 654321",
             "roles":  "guest",
             "street": "Street 10",
             "city": "City"
@@ -58,7 +58,7 @@ describe('Assert API', function() {
             chai
             .request(app)
             .get('/api/users/profile')
-             .send(newUser.email)
+             .send(newUser)
             .end((err, res) => {
                 if (err) {
                     done(err);
@@ -83,12 +83,12 @@ describe('Assert API', function() {
         });
 
         const updatedUser = {
-            "firstName": "Sarah",
-            "lastName": "Doe",
+            "firstname": "Sarah",
+            "lastname": "Doe",
             "isActive": true,
-            "emailAdress": "this2@email.com",
+            "emails": "this2@email.com",
             "password": "pw",
-            "phoneNumber": "87 654321",
+            "phonenumber": "87 654321",
             "roles":  "guest",
             "street": "Street 10",
             "city": "City",
@@ -110,7 +110,7 @@ describe('Assert API', function() {
         });
 
         const deleteUser = {
-            "emailAdress": "this2@email.com",
+            "email": "this2@email.com",
             "password": "pw"
         }
 

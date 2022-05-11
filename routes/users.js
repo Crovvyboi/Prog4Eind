@@ -16,7 +16,8 @@ router.get('/users', function(req, res, next) {
         statusCode: "400",
         message: "Connection error"
       });
-
+      console.log(err);
+      console.log(connection);
       connection.query(sql, function (error, results, fields) {
         connection.release();
 
@@ -38,13 +39,15 @@ router.get('/users', function(req, res, next) {
 
 
 router.post('/users/post', function(req, res, next) {
-  let sql = "Insert Into user (firstName, lastName, isActive, emailAdress, password, phoneNumber, roles, street, city) " + " Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  let sql = "Insert Into user (firstName, lastName, isActive, emailAdress, password, phoneNumber, roles, street, city) " + " Values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   db.getConnection(function (err, connection) {
     if (err) res.status(500).json({
       statusCode: "400",
       message: "Connection error"
     });
+    console.log(err);
+    console.log(connection);
     
     connection.query(sql, [req.body.firstname, req.body.lastname, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber, req.body.roles, req.body.street, req.body.city], function(err) {
       if (err) {
@@ -97,7 +100,7 @@ router.get('/users/id', function(req, res, next) {
       message: "Connection error"
     });
 
-    connection.query("Select * From user Where id = ?", req.body.id, function(err, data) {
+    connection.query("Select * From user Where id = ?", 1, function(err, data) {
       if (err) {
         console.log(err);
         res.status(500).json({
