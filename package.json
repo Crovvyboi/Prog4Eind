@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "test": "mocha test/test --timeout 4000 --exit",
-    "start": "node ./bin/www"
+
+    "start": "node app.js"
   },
   "dependencies": {
     "body-parser": "^1.20.0",
