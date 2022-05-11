@@ -18,6 +18,7 @@ describe('Assert API', function() {
             .end((err, res) => {
                 if (err) {
                     done(err);
+                    throw err;
                 }
                 expect(res).to.have.status(202);
                 done();
@@ -45,6 +46,7 @@ describe('Assert API', function() {
             .end((err, res) => {
                 if (err) {
                     done(err);
+                    throw err;
                 }
                 expect(res).to.have.status(201);
                 done();
@@ -59,6 +61,7 @@ describe('Assert API', function() {
             .end((err, res) => {
                 if (err) {
                     done(err);
+                    throw err;
                 }
                 expect(res).to.have.status(202);
                 done();
@@ -73,6 +76,7 @@ describe('Assert API', function() {
             .end((err, res) => {
                 if (err) {
                     done(err);
+                    throw err;
                 }
                 expect(res).to.have.status(202);
                 done();
@@ -100,6 +104,7 @@ describe('Assert API', function() {
             .end((err, res) => {
                 if (err) {
                     done(err);
+                    throw err;
                 }
                 expect(res).to.have.status(205);
                 done();
@@ -119,6 +124,7 @@ describe('Assert API', function() {
             .end((err, res) => {
                 if (err) {
                     done(err);
+                    throw err;
                 }
                 expect(res).to.have.status(206);
                 done();
