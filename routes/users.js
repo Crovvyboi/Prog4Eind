@@ -16,8 +16,6 @@ router.get('/users', function(req, res, next) {
         statusCode: "500",
         message: "Connection error"
       });
-      console.log(err);
-      console.log(connection);
       connection.query(sql, function (error, results, fields) {
         connection.release();
 
@@ -46,8 +44,6 @@ router.post('/users/post', function(req, res, next) {
       statusCode: "500",
       message: "Connection error"
     });
-    console.log(err);
-    console.log(connection);
     
     connection.query(sql, [req.body.firstname, req.body.lastname, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber, req.body.roles, req.body.street, req.body.city], function(err) {
       if (err) {
