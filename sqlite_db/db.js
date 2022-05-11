@@ -9,11 +9,6 @@
 const mysql = require('mysql');
 require('dotenv').config();
 const pool = mysql.createPool({
-    // DB_HOST : 'db-mysql-ams3-37313-do-user-2119860-0.b.db.ondigitalocean.com',
-    // DB_PORT : '25060',
-    // DB_USER : '2125078',
-    // DB_DATABASE : '215078',
-    // DB_PASSWORD : 'secret',
 
     connectionLimit : 10,
     host: process.env.DB_HOST,
@@ -21,12 +16,6 @@ const pool = mysql.createPool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE
-
-    // host : 'localhost',
-    // port : 3306,
-    // user : 'root',
-    // password : '',
-    // database : '2125078'
 });
 
 module.exports = pool;

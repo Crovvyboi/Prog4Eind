@@ -10,17 +10,15 @@ const {expect} = chai;
 chai.use(chaiHTTP);
 
 describe('Assert API', function() {
-    describe('Call api functions', function (err) {
-        if (err) {
-            throw err;
-        }
+    describe('Call api functions', function () {
+
         it('/api/users', function(done) {
             chai
             .request(app)
             .get('/api/users')
             .end((err, res) => {
                 if (err) {
-                    throw err;
+                    done(err);
                 }
                 expect(res).to.have.status(202);
                 done();
@@ -47,7 +45,7 @@ describe('Assert API', function() {
              .send(newUser)
             .end((err, res) => {
                 if (err) {
-                    throw err;
+                    done(err);
                 }
                 expect(res).to.have.status(201);
                 done();
@@ -61,7 +59,7 @@ describe('Assert API', function() {
              .send(newUser.email)
             .end((err, res) => {
                 if (err) {
-                    throw err;
+                    done(err);
                 }
                 expect(res).to.have.status(202);
                 done();
@@ -75,7 +73,7 @@ describe('Assert API', function() {
              .send("1")
             .end((err, res) => {
                 if (err) {
-                    throw err;
+                    done(err);
                 }
                 expect(res).to.have.status(202);
                 done();
@@ -102,7 +100,7 @@ describe('Assert API', function() {
              .send(updatedUser)
             .end((err, res) => {
                 if (err) {
-                    throw err;
+                    done(err);
                 }
                 expect(res).to.have.status(205);
                 done();
@@ -121,7 +119,7 @@ describe('Assert API', function() {
              .send(deleteUser)
             .end((err, res) => {
                 if (err) {
-                    throw err;
+                    done(err);
                 }
                 expect(res).to.have.status(206);
                 done();

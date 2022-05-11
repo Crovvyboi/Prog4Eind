@@ -11,6 +11,38 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  env:
+            MYSQL_ROOT_PASSWORD: root # default root password to use must be 'root'
+            DB_HOST: localhost
+            DB_PORT: 3306
+            DB_DATABASE: 2125078
+            DB_USER: root
+            DB_PASSWORD: root
+        services:
+            mysql:
+                image: mysql:5.7
+                ports:
+                    - 3306
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Start MySQL connection from host
+              run: |
+                  sudo /etc/init.d/mysql start
+                  sudo apt-get install -y mysql-client
+                  mysql -uroot -p${{ env.MYSQL_ROOT_PASSWORD }} -e "SHOW DATABASES;"
+                  mysql -uroot -p${{ env.MYSQL_ROOT_PASSWORD }} -e "CREATE DATABASE ${{env.DB_DATABASE}};"
+            - name: Import the database
+              run: |
+                  mysql -uroot -p${{env.MYSQL_ROOT_PASSWORD}} ${{env.DB_DATABASE}} < share-a-meal.sql
+                  mysql -uroot -p${{env.MYSQL_ROOT_PASSWORD}} ${{env.DB_DATABASE}} -e "SHOW TABLES;"
+            - name: npm install
+              run: |
+                  npm install
+            - name: npm test
+              run: |
+                  npm test -- --DB_PASSWORD $MYSQL_ROOT_PASSWORD --DB_USER root --DB_NAME $DB_DATABASE
+
   # This workflow contains a single job called "build"
   deploy:
     # The type of runner that the job will run on
@@ -19,15 +51,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '12.x'
-      - run: npm install
-      - run: npm run build --if-present
-      - run: npm test
-      
+
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:

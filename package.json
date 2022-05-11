@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "mocha test/test --timeout 4000 --exit",
-
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "mocha test/test --timeout 4000 --exit"
   },
   "dependencies": {
     "body-parser": "^1.20.0",
