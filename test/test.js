@@ -10,7 +10,10 @@ const {expect} = chai;
 chai.use(chaiHTTP);
 
 describe('Assert API', function() {
-    describe('Call api functions', function () {
+    describe('Call api functions', function (err) {
+        if (err) {
+            throw err;
+        }
         it('/api/users', function(done) {
             chai
             .request(app)
