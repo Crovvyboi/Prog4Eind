@@ -5,7 +5,6 @@
   "scripts": {
     "test": "mocha test/test --timeout 4000 --exit",
     "start": "node ./bin/www"
-
   },
   "dependencies": {
     "body-parser": "^1.20.0",
@@ -18,6 +17,7 @@
     "jade": "~1.11.0",
     "mocha": "^10.0.0",
     "morgan": "~1.9.1",
+    "mysql": "^2.18.1",
     "node-fetch": "^3.2.3",
     "sqlite3": "^5.0.5"
   },

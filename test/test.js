@@ -25,15 +25,16 @@ describe('Assert API', function() {
         });
 
         const newUser = {
-            "id": 1,
-            "firstname": "John",
-            "lastname": "Doe",
-            "street": "Street 10",
-            "city": "City",
+            "firstName": "John",
+            "lastName": "Doe",
             "isActive": false,
-            "email": "this2@email.com",
+            "emailAdress": "this2@email.com",
             "password": "pw",
-            "phonenumber": "87 654321"
+            "phoneNumber": "87 654321",
+            "roles":  "guest",
+            "street": "Street 10",
+            "city": "City"
+
         }
 
         it('/api/users/post', function(done) {
@@ -79,14 +80,15 @@ describe('Assert API', function() {
         });
 
         const updatedUser = {
-            "firstname": "Sarah",
-            "lastname": "Doe",
-            "street": "Street 20",
-            "city": "City",
+            "firstName": "Sarah",
+            "lastName": "Doe",
             "isActive": true,
-            "email": "this2@email.com",
-            "phonenumber": "87 654321",
-            "id": 1,
+            "emailAdress": "this2@email.com",
+            "password": "pw",
+            "phoneNumber": "87 654321",
+            "roles":  "guest",
+            "street": "Street 10",
+            "city": "City",
             "password": "pw"
         }
 
@@ -105,7 +107,7 @@ describe('Assert API', function() {
         });
 
         const deleteUser = {
-            "id": 1,
+            "emailAdress": "this2@email.com",
             "password": "pw"
         }
 
