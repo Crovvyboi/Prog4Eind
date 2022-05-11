@@ -21,21 +21,6 @@ const pool = mysql.createPool({
 
 module.exports = pool;
 
-// pool.getConnection(function (err, connection) {
-//     if (err) throw error;
-
-//     connection.query('Select name, id From meal', function (error, results, fields) {
-//         connection.release();
-
-//         if (error) throw error;
-
-//         console.log('results = ' + results);
-
-//         pool.end((err) => {
-//             console.log('pool was closed.');
-//         });
-//     });
-// });
 
 
 pool.on('acquire', function (connection) {
