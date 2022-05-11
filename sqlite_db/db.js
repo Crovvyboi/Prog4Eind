@@ -17,7 +17,6 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
 
-    socketpath: "D:/Xampp/mysql/mysql.sock"
 });
 
 module.exports = pool;
