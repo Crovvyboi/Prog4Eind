@@ -100,7 +100,7 @@ router.get('/users/id', function(req, res, next) {
       message: "Connection error"
     });
 
-    connection.query("Select * From user Where id = ?", 1, function(err, data) {
+    connection.query("Select * From user Where id = ?", req.body.id, function(err, data) {
       if (err) {
         console.log(err);
         res.status(500).json({

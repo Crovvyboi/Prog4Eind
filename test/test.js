@@ -68,11 +68,15 @@ describe('Assert API', function() {
             });
         });
 
+        const id = {
+            "id": 3
+        }
+
         it('/api/users/id', function(done) {
             chai
             .request(app)
             .get('/api/users/id')
-             .send("1")
+             .send(id)
             .end((err, res) => {
                 if (err) {
                     done(err);
