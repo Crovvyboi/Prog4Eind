@@ -11,7 +11,6 @@ chai.use(chaiHTTP);
 
 describe('Assert API', function() {
     describe('Call api functions', function () {
-
         it('/api/users', function(done) {
             chai
             .request(app)
