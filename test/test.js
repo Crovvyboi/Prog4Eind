@@ -22,7 +22,7 @@ describe('Assert API', function() {
                 if (err) {
                     done(err);
                 }
-                expect(res).to.have.status(202);
+                expect(res).to.have.status(200);
                 done();
             });
         });
@@ -63,7 +63,7 @@ describe('Assert API', function() {
                 if (err) {
                     done(err);
                 }
-                expect(res).to.have.status(202);
+                expect(res).to.have.status(200);
                 done();
             });
         });
@@ -81,7 +81,7 @@ describe('Assert API', function() {
                 if (err) {
                     done(err);
                 }
-                expect(res).to.have.status(202);
+                expect(res).to.have.status(200);
                 done();
             });
         });
@@ -107,7 +107,7 @@ describe('Assert API', function() {
                 if (err) {
                     done(err);
                 }
-                expect(res).to.have.status(205);
+                expect(res).to.have.status(200);
                 done();
             });
         });
@@ -126,7 +126,7 @@ describe('Assert API', function() {
                 if (err) {
                     done(err);
                 }
-                expect(res).to.have.status(206);
+                expect(res).to.have.status(200);
                 done();
             });
         });

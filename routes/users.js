@@ -13,7 +13,7 @@ router.get('/users', function(req, res, next) {
 
   db.getConnection(function (err, connection) {
       if (err) res.status(500).json({
-        statusCode: "400",
+        statusCode: "500",
         message: "Connection error"
       });
       console.log(err);
@@ -22,15 +22,15 @@ router.get('/users', function(req, res, next) {
         connection.release();
 
         if (error){
-          res.status(500).json({
-            statusCode: "500",
+          res.status(400).json({
+            statusCode: "400",
             message: "Could not get users"
           })
         } 
 
         console.log('#results = ' + results.length);
-        res.status(202).json({
-          statusCode: "202",
+        res.status(200).json({
+          statusCode: "200",
           results: results
         });
       });
@@ -43,7 +43,7 @@ router.post('/users/post', function(req, res, next) {
 
   db.getConnection(function (err, connection) {
     if (err) res.status(500).json({
-      statusCode: "400",
+      statusCode: "500",
       message: "Connection error"
     });
     console.log(err);
@@ -51,8 +51,8 @@ router.post('/users/post', function(req, res, next) {
     
     connection.query(sql, [req.body.firstname, req.body.lastname, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber, req.body.roles, req.body.street, req.body.city], function(err) {
       if (err) {
-        res.status(500).json({
-          statusCode: "500",
+        res.status(409).json({
+          statusCode: "409",
           message: "Failed to insert!"
         });
         throw err
@@ -69,23 +69,23 @@ router.post('/users/post', function(req, res, next) {
 router.get('/users/profile', function(req, res, next) {
   db.getConnection(function (err, connection) {
     if (err) res.status(500).json({
-      statusCode: "400",
+      statusCode: "500",
       message: "Connection error"
     });
 
     connection.query("Select * From user Where emailAdress = ?", req.body.email, function(err, data) {
       if (err) {
         console.log(err);
-        res.status(500).json({
-          statusCode: "500",
+        res.status(400).json({
+          statusCode: "400",
           message: "Could not get user"
         })
         throw err;
       }
 
       console.log("Functie nog niet gerealiseerd");
-      res.status(202).json({
-        statusCode: "202",
+      res.status(200).json({
+        statusCode: "200",
         results: data});
 
     });
@@ -96,22 +96,22 @@ router.get('/users/id', function(req, res, next) {
 
   db.getConnection(function (err, connection) {
     if (err) res.status(500).json({
-      statusCode: "400",
+      statusCode: "500",
       message: "Connection error"
     });
 
     connection.query("Select * From user Where id = ?", req.body.id, function(err, data) {
       if (err) {
         console.log(err);
-        res.status(500).json({
-          statusCode: "500",
+        res.status(404).json({
+          statusCode: "404",
           message: "Failed to get user!"
         });
         throw err;
       }
 
-      res.status(202).json({
-        statusCode: "202",
+      res.status(200).json({
+        statusCode: "200",
         results: data
       });
       
@@ -125,21 +125,21 @@ router.put('/users/update', function(req, res, next) {
 
   db.getConnection(function (err, connection) {
     if (err) res.status(500).json({
-      statusCode: "400",
+      statusCode: "500",
       message: "Connection error"
     });
 
     connection.query(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.phonenumber, req.body.email, req.body.password], function(err) {
       if (err) {
         console.log(err);
-        res.status(500).json({
-          status: "500",
+        res.status(400).json({
+          status: "400",
           message: "Failed to update!"
         });
       }
 
-      res.status(205).json({
-        status: "205",
+      res.status(200).json({
+        status: "200",
         message: "Updated!"
       });
     });
@@ -152,22 +152,22 @@ router.delete('/users/remove', function(req, res, next) {
 
   db.getConnection(function (err, connection) {
     if (err) res.status(500).json({
-      statusCode: "400",
+      statusCode: "500",
       message: "Connection error"
     });
 
     connection.query(sql, [req.body.email, req.body.password], function(err) {
       if (err) {
         console.log(err);
-        res.status(500).json({
+        res.status(400).json({
           status: "500",
           message: "Failed to delete!"
         });
         throw err;
       }
 
-        res.status(206).json({
-          status: "206",
+        res.status(200).json({
+          status: "200",
           message: "Removed!"
         });
       });
