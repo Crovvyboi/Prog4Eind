@@ -20,7 +20,6 @@ describe('Assert API', function() {
             .get('/api/users')
             .end((err, res) => {
                 if (err) {
-                    done(err);
                     throw err;
                 }
                 expect(res).to.have.status(202);
@@ -48,7 +47,6 @@ describe('Assert API', function() {
              .send(newUser)
             .end((err, res) => {
                 if (err) {
-                    done(err);
                     throw err;
                 }
                 expect(res).to.have.status(201);
@@ -63,7 +61,6 @@ describe('Assert API', function() {
              .send(newUser.email)
             .end((err, res) => {
                 if (err) {
-                    done(err);
                     throw err;
                 }
                 expect(res).to.have.status(202);
@@ -78,7 +75,6 @@ describe('Assert API', function() {
              .send("1")
             .end((err, res) => {
                 if (err) {
-                    done(err);
                     throw err;
                 }
                 expect(res).to.have.status(202);
@@ -106,7 +102,6 @@ describe('Assert API', function() {
              .send(updatedUser)
             .end((err, res) => {
                 if (err) {
-                    done(err);
                     throw err;
                 }
                 expect(res).to.have.status(205);
@@ -126,7 +121,6 @@ describe('Assert API', function() {
              .send(deleteUser)
             .end((err, res) => {
                 if (err) {
-                    done(err);
                     throw err;
                 }
                 expect(res).to.have.status(206);

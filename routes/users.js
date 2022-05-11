@@ -5,6 +5,7 @@ module.exports = router;
 
 // Connect to db
 var db = require('../sqlite_db/db');
+require('dotenv').config();
 
 /* GET user listing. */
 router.get('/users', function(req, res, next) {
