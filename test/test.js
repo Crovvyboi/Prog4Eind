@@ -4,6 +4,9 @@ const chai = require("chai");
 const { Server } = require("http");
 const { exit } = require("process");
 
+var db = require('../sqlite_db/db');
+require('dotenv').config();
+
 let assert = require('assert').strict;
 
 const {expect} = chai;
