@@ -106,7 +106,7 @@ module.exports = {
             });
             }
     
-            connection.query(sql, [req.body.firstname, req.body.lastname, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber, req.body.roles, req.body.street, req.body.city], function(err) {
+            connection.query(sql, [req.body.firstname, req.body.lastname, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber, req.body.roles, req.body.street, req.body.city], function(err, results) {
             if (err) {
                 res.status(409).json({
                 statusCode: "409",
@@ -119,7 +119,7 @@ module.exports = {
                 statusCode: "201",
                 message: "Inserted!",
                 // show inserted user
-                result: data
+                result: results
             });
             });
         });
@@ -198,7 +198,7 @@ module.exports = {
             message: "Connection error"
         });
     
-        connection.query(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.phonenumber, req.body.email, req.body.password], function(err) {
+        connection.query(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.phonenumber, req.body.email, req.body.password], function(err, results) {
             if (err) {
             console.log(err);
             res.status(400).json({
@@ -211,7 +211,7 @@ module.exports = {
             status: "200",
             // Show updated data
             message: "Updated!",
-            results: data
+            results: results
             });
         });
         });
@@ -229,7 +229,7 @@ module.exports = {
             message: "Connection error"
         });
     
-        connection.query(sql, [req.body.email, req.body.password], function(err) {
+        connection.query(sql, [req.body.email, req.body.password], function(err, results) {
             if (err) {
             console.log(err);
             res.status(400).json({
@@ -242,7 +242,7 @@ module.exports = {
             res.status(200).json({
                 status: "200",
                 message: "Removed!",
-                results: data
+                results: results
             });
             });
         });
