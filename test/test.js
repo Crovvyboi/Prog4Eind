@@ -13,7 +13,7 @@ const {expect} = chai;
 chai.use(chaiHTTP);
 
 describe('Assert API', function() {
-    describe('Call api functions', function () {
+    describe('Call user functions', function () {
         it('/api/users', function(done) {
             chai
             .request(app)
@@ -69,13 +69,28 @@ describe('Assert API', function() {
         });
 
         const id = {
-            "id": 3
+            "id": 3,
+            "isActive": 1
         }
 
         it('/api/users/id', function(done) {
             chai
             .request(app)
-            .get('/api/users/id')
+            .get('/api/users')
+             .send(id.id)
+            .end((err, res) => {
+                if (err) {
+                    done(err);
+                }
+                expect(res).to.have.status(200);
+                done();
+            });
+        });
+
+        it('/api/users/id&isActive', function(done) {
+            chai
+            .request(app)
+            .get('/api/users')
              .send(id)
             .end((err, res) => {
                 if (err) {
@@ -131,5 +146,8 @@ describe('Assert API', function() {
             });
         });
 
+    });
+    describe('Call meal functions', function () {
+        
     });
 });
