@@ -30,7 +30,7 @@ describe('Assert API', function() {
         const newUser = {
             "firstname": "John",
             "lastname": "Doe",
-            "isActive": false,
+            "isActive": 0,
             "email": "this2@email.com",
             "password": "pw",
             "phonenumber": "87 654321",
@@ -104,7 +104,7 @@ describe('Assert API', function() {
         const updatedUser = {
             "firstname": "Sarah",
             "lastname": "Doe",
-            "isActive": true,
+            "isActive": 1,
             "emails": "this2@email.com",
             "phonenumber": "87 654321",
             "roles":  "guest",
