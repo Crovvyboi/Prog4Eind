@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const privateKey = 'secretstring'
 
-jwt.sign({ userid: 1 }, privateKey,  function(err, token) {
+jwt.sign({ userid: 4 }, privateKey,  function(err, token) {
     if (err) {
         console.log(err)
     }

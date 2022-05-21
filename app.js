@@ -8,7 +8,7 @@ require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users.routes');
-var mealsRouter = require('./routes/meals');
+var mealsRouter = require('./routes/meals.routes');
 var authRouter = require('./routes/auth.routes');
 
 var app = express();

@@ -4,6 +4,7 @@ const assert = require('assert')
 
 module.exports = {
     login: (req, res, next) => {
+
         const {emailAdress, password} = req.body;
 
         const queryString = "Select id, firstName, lastName, emailAdress, password From user Where emailAdress = ?";
@@ -36,17 +37,18 @@ module.exports = {
                             console.log(err)
                         }
                         if (token) {
+                            console.log("Login successful!")
                             console.log(token);
-                            res.status(200).json({
-                            statusCode: "200",
-                            results: token
-                            });
+                            next()
                         }
                     
                     });
                 }
                 else {
-
+                    res.status(401).json({
+                        statusCode: "401",
+                        message: "Login failed"
+                    });
                 }
 
               }
@@ -65,5 +67,37 @@ module.exports = {
               
             });
         });
+    },
+
+    validate: (req, res, next) => {
+        const authHeader = req.headers.authorization
+        var jwtSecretKey = 'secretstring'
+        if (!authHeader) {
+            console.log('Authorization header missing!')
+            res.status(401).json({
+                error: 'Authorization header missing!',
+                datetime: new Date().toISOString(),
+            })
+        } else {
+            // Strip the word 'Bearer ' from the headervalue
+            const token = authHeader.substring(7, authHeader.length)
+
+            jwt.verify(token, jwtSecretKey, (err, payload) => {
+                if (err) {
+                    console.log('Not authorized')
+                    res.status(401).json({
+                        error: 'Not authorized',
+                        datetime: new Date().toISOString(),
+                    })
+                }
+                if (payload) {
+                    console.log('token is valid', payload)
+                    // User heeft toegang. Voeg UserId uit payload toe aan
+                    // request, voor ieder volgend endpoint.
+                    req.userId = payload.userId
+                    next()
+                }
+            })
+        }
     }
 }
