@@ -69,7 +69,7 @@ describe('Assert API', function() {
         });
 
         const id = {
-            "id": 3,
+            "id": '3',
             "isActive": 1
         }
 
