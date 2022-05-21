@@ -70,7 +70,7 @@ module.exports = {
     },
 
     validate: (req, res, next) => {
-        const authHeader = req.headers.authorization || TOKEN_HEADER
+        const authHeader = req.headers.authorization || process.env.TOKEN_HEADER
         var jwtSecretKey = 'secretstring'
         if (!authHeader) {
             console.log('Authorization header missing!')
