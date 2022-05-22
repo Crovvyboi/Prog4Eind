@@ -232,7 +232,6 @@ module.exports = {
                 status: "400",
                 message: "Failed to delete!"
             });
-            throw err;
             }
     
             res.status(200).json({
