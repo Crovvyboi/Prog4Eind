@@ -27,6 +27,45 @@ describe('Assert API', function() {
             });
         });
 
+        it('/api/users?id=3', function(done) {
+            chai
+            .request(app)
+            .get('/api/users?id=3')
+            .end((err, res) => {
+                if (err) {
+                    done(err);
+                }
+                expect(res).to.have.status(200);
+                done();
+            });
+        });
+
+        it('/api/users?isActive=1', function(done) {
+            chai
+            .request(app)
+            .get('/api/users?isActive=1')
+            .end((err, res) => {
+                if (err) {
+                    done(err);
+                }
+                expect(res).to.have.status(200);
+                done();
+            });
+        });
+
+        it('/api/users?id=3&isActive=1', function(done) {
+            chai
+            .request(app)
+            .get('/api/users?id=3&isActive=1')
+            .end((err, res) => {
+                if (err) {
+                    done(err);
+                }
+                expect(res).to.have.status(200);
+                done();
+            });
+        });
+
         const newUser = {
             "firstname": "John",
             "lastname": "Doe",
