@@ -39,7 +39,6 @@ module.exports = {
                         if (token) {
                             console.log("Login successful!")
                             console.log(token);
-                            process.env.CUSTOM_TOKEN = 'Bearer ' + token;
                             next()
                         }
                     
