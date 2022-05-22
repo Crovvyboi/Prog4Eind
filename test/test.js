@@ -23,6 +23,7 @@ describe('Assert API', function() {
             chai
             .request(app)
             .get('/auth/login')
+            .send(logincred)
             .end((err, res) => {
                 if (err) {
                     done(err);
