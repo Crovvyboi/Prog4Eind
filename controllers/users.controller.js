@@ -83,7 +83,6 @@ module.exports = {
             });
         }
         else{
-            // Check if user exists
                 
             db.getConnection(function (err, connection) {
                 if (err) res.status(500).json({
@@ -92,7 +91,6 @@ module.exports = {
                 });
 
                 connection.query(checkusersql, [req.body.email], function(error, results, fields) {
-                    // Check if user does not exist
                     if (results > 0) {
                     res.status(409).json({
                         statusCode: "409",
@@ -111,7 +109,6 @@ module.exports = {
                     res.status(201).json({
                         statusCode: "201",
                         message: "Inserted!",
-                        // show inserted user
                         result: results
                     });
                     });
@@ -121,7 +118,6 @@ module.exports = {
     },
     
     getUserProfile: (req, res, next) => {
-        // check JWT token
         db.getConnection(function (err, connection) {
         if (err) res.status(500).json({
             statusCode: "500",
