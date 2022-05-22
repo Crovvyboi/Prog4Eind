@@ -66,7 +66,7 @@ module.exports = {
     },
 
     validate: (req, res, next) => {
-        const authHeader = process.env.CUSTOM_TOKEN
+        const authHeader = req.headers.authorization || process.env.TOKEN_HEADER
         var jwtSecretKey = 'secretstring'
         if (!authHeader) {
             console.log('Authorization header missing!')
