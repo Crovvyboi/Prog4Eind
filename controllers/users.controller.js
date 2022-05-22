@@ -177,7 +177,6 @@ module.exports = {
                     else {
                         res.status(200).json({
                             status: "200",
-                            // Show updated data
                             message: "Updated!",
                             results: results
                             });
@@ -187,37 +186,11 @@ module.exports = {
                 });
             });
         }
-    
-        db.getConnection(function (err, connection) {
-        if (err) res.status(500).json({
-            statusCode: "500",
-            message: "Connection error"
-        });
-    
-        connection.query(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.phonenumber, req.body.email, req.body.password], function(err, results) {
-            if (err) {
-            console.log(err);
-            res.status(400).json({
-                status: "400",
-                message: "Failed to update!"
-            });
-            }
-    
-            res.status(200).json({
-            status: "200",
-            // Show updated data
-            message: "Updated!",
-            results: results
-            });
-        });
-        });
     },
     
     deleteUser: (req, res, next) => {
         let sql = "Delete From user " +
         "Where emailAdress = ? And password = ?";
-    
-        // check if user is owner
     
         db.getConnection(function (err, connection) {
         if (err) res.status(500).json({
@@ -233,12 +206,15 @@ module.exports = {
                 message: "Failed to delete!"
             });
             }
+            else {
+                res.status(200).json({
+                    status: "200",
+                    message: "Removed!",
+                    results: results
+                });
+            }
     
-            res.status(200).json({
-                status: "200",
-                message: "Removed!",
-                results: results
-            });
+
             });
         });
     }
