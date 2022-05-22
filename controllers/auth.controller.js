@@ -55,7 +55,7 @@ module.exports = {
               else {
                 res.status(404).json({
                     statusCode: "404",
-                    message: "No user found"
+                    message: "No user id found"
                 });
               }
 
