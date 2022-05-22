@@ -6,12 +6,12 @@ var router = express.Router();
 const mealController = require('../controllers/meals.controller')
 
 /* GET meal listing. */
-router.post('/meals/post',authController.login, mealController.addMeal);
+router.post('/meals/post',authController.login, authController.validate, mealController.addMeal);
 
-router.put('/meals/update',authController.login, mealController.updateMeal);
+router.put('/meals/update',authController.login, authController.validate, mealController.updateMeal);
 
 router.get('/meals',  mealController.getMeals);
 
-router.delete('/meals/remove',authController.login, mealController.removeMeal);
+router.delete('/meals/remove',authController.login, authController.validate, mealController.removeMeal);
 
 module.exports = router;

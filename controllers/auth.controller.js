@@ -32,13 +32,14 @@ module.exports = {
 
                 if (user.password === password) {
 
-                    jwt.sign({ userid: user.id }, 'process.env.JWT_SECRET', {expiresIn: '7d'},  function(err, token) {
+                    jwt.sign({ userid: user.id }, 'secretstring', {expiresIn: '7d'},  function(err, token) {
                         if (err) {
                             console.log(err)
                         }
                         if (token) {
                             console.log("Login successful!")
                             console.log(token);
+                            process.env.CUSTOM_TOKEN = 'Bearer ' + token;
                             next()
                         }
                     
@@ -59,18 +60,13 @@ module.exports = {
                 });
               }
 
-        
-            //   res.status(200).json({
-            //     statusCode: "200",
-            //     results: results
-            //   });
               
             });
         });
     },
 
     validate: (req, res, next) => {
-        const authHeader = req.headers.authorization || process.env.TOKEN_HEADER
+        const authHeader = process.env.CUSTOM_TOKEN
         var jwtSecretKey = 'secretstring'
         if (!authHeader) {
             console.log('Authorization header missing!')
