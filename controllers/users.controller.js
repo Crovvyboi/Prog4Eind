@@ -75,56 +75,49 @@ module.exports = {
         }
     
         // Insert email RegEx
-        if (false) {
-        res.status(400).json({
-            statusCode: "400",
-            message: "Email does not meet requirements"
-        });
-        }
-    
-        // Insert password RegEx
-        if (false) {
-        res.status(400).json({
-            statusCode: "400",
-            message: "Password does not meet requirements"
-        });
-        }
-    
-        // Check if user exists
-    
-        db.getConnection(function (err, connection) {
-        if (err) res.status(500).json({
-            statusCode: "500",
-            message: "Connection error"
-        });
-    
-        connection.query(checkusersql, [req.body.email], function(error, results, fields) {
-            // Check if user does not exist
-            if (results > 0) {
-            res.status(409).json({
-                statusCode: "409",
-                message: "User already exists",
+        let regEx =  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        if (!regEx.test(req.body.email)) {
+            res.status(400).json({
+                statusCode: "400",
+                message: "Email does not meet requirements"
             });
-            }
-    
-            connection.query(sql, [req.body.firstname, req.body.lastname, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber, req.body.roles, req.body.street, req.body.city], function(err, results) {
-            if (err) {
-                res.status(409).json({
-                statusCode: "409",
-                message: "Failed to insert!"
+        }
+        else{
+            // Check if user exists
+                
+            db.getConnection(function (err, connection) {
+                if (err) res.status(500).json({
+                    statusCode: "500",
+                    message: "Connection error"
                 });
-                throw err
-            }
-        
-            res.status(201).json({
-                statusCode: "201",
-                message: "Inserted!",
-                // show inserted user
-                result: results
+
+                connection.query(checkusersql, [req.body.email], function(error, results, fields) {
+                    // Check if user does not exist
+                    if (results > 0) {
+                    res.status(409).json({
+                        statusCode: "409",
+                        message: "User already exists",
+                    });
+                    }
+
+                    connection.query(sql, [req.body.firstname, req.body.lastname, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber, req.body.roles, req.body.street, req.body.city], function(err, results) {
+                    if (err) {
+                        res.status(409).json({
+                        statusCode: "409",
+                        message: "Failed to insert!"
+                        });
+                    }
+                
+                    res.status(201).json({
+                        statusCode: "201",
+                        message: "Inserted!",
+                        // show inserted user
+                        result: results
+                    });
+                    });
+                });
             });
-            });
-        });
-        });
+        }
     },
     
     getUserProfile: (req, res, next) => {
@@ -142,7 +135,6 @@ module.exports = {
                 statusCode: "400",
                 message: "Could not get user"
             })
-            throw err;
             }
     
             console.log("Functie nog niet gerealiseerd");
@@ -153,44 +145,47 @@ module.exports = {
         });
         });
     },
-    
-    // getUserId: (req, res, next) => {
-    //     // Check jwt token
-    //     db.getConnection(function (err, connection) {
-    //     if (err) res.status(500).json({
-    //         statusCode: "500",
-    //         message: "Connection error"
-    //     });
-    
-    //     connection.query("Select * From user Where id = ?", req.body.id, function(err, data) {
-    //         if (err) {
-    //         console.log(err);
-    //         res.status(404).json({
-    //             statusCode: "404",
-    //             message: "Failed to get user!"
-    //         });
-    //         throw err;
-    //         }
-    
-    //         res.status(200).json({
-    //         statusCode: "200",
-    //         results: data
-    //         });
-            
-    //     });
-    //     });
-    // },
+
     
     updateUser: (req, res, next) => {
         let sql = "Update user Set firstName = ?, lastName = ?, street = ?, city = ?, isActive = ?, phoneNumber = ? " +
         "Where emailAdress = ? And password = ?";
     
         // Check phonenumber regex
-        if (false) {
-        res.status(400).json({
-            statusCode: "400",
-            message: "Phonenumber does not meet standard expression"
-        });
+        let phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
+        if (!phoneRegex.test(req.body.phonenumber)) {
+            res.status(400).json({
+                statusCode: "400",
+                message: "Phonenumber does not meet standard expression"
+            });
+        }
+        else {
+            db.getConnection(function (err, connection) {
+                if (err) res.status(500).json({
+                    statusCode: "500",
+                    message: "Connection error"
+                });
+            
+                connection.query(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.phonenumber, req.body.email, req.body.password], function(err, results) {
+                    if (err) {
+                    console.log(err);
+                    res.status(400).json({
+                        status: "400",
+                        message: "Failed to update!"
+                    });
+                    }
+                    else {
+                        res.status(200).json({
+                            status: "200",
+                            // Show updated data
+                            message: "Updated!",
+                            results: results
+                            });
+                    }
+            
+
+                });
+            });
         }
     
         db.getConnection(function (err, connection) {
