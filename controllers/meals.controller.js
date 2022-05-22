@@ -8,7 +8,8 @@ require('dotenv').config();
 
 module.exports = {
     addMeal: (req, res, next) => {
-        let sql = "Insert Into meal ( isActive, isVega, isVegan, isToTakeHome, dateTime, maxAmountOfParticipants, price, imageUrl, cookId, createDate, updateDate, name, description, allergenes) " + " Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        let sql = "Insert Into meal ( isActive, isVega, isVegan, isToTakeHome, dateTime, maxAmountOfParticipants, price, imageUrl, cookId, createDate, updateDate, name, description, allergenes) " + 
+        " Values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         db.getConnection(function (err, connection) {
             if (err) res.status(500).json({
@@ -16,19 +17,19 @@ module.exports = {
             message: "Connection error"
             });
             
-            connection.query(sql, [req.body.isActive, req.body.isVega, req.body.isVegan, req.body.isToTakeHome, req.body.dateTime, req.body.maxAmountOfParticipants, req.body.price, req.body.imageUrl, req.body.cookId, req.body.createDate, req.body.updateDate, req.body.name, req.body.description, req.body.allergenes], function(err) {
+            connection.query(sql, [req.body.isActive, req.body.isVega, req.body.isVegan, req.body.isToTakeHome, req.body.dateTime, req.body.maxAmountOfParticipants, req.body.price, req.body.imageUrl, req.body.cookId, req.body.createDate, req.body.updateDate, req.body.name, req.body.description, req.body.allergenes], function(err, result) {
             if (err) {
                 res.status(409).json({
                 statusCode: "409",
                 message: "Failed to insert!"
                 });
-                throw err
             }
         
             res.status(201).json({
                 statusCode: "201",
                 // show inserted data
-                message: "Inserted!"
+                message: "Inserted!",
+                result: result
             });
             });
         });
@@ -39,7 +40,7 @@ module.exports = {
         let sql = "Update meal Set isActive = ?,  isVega = ?, isVegan = ?, isToTakeHome = ?, dateTime = ? " +
         ", maxAmountOfParticipants = ?, price = ?, imageUrl = ?, cookId = ?, createDate = ?" +
         ", updateDate = ?, name = ?, description = ?, allergenes = ?" +
-        "Where name = ? And id = ?";
+        "Where name = ? and cookId = ?";
         
         db.getConnection(function (err, connection) {
             if (err) res.status(500).json({
@@ -47,7 +48,7 @@ module.exports = {
             message: "Connection error"
             });
         
-            connection.query(sql, [req.body.isActive, req.body.isVega, req.body.isVegan, req.body.isToTakeHome, req.body.dateTime, req.body.maxAmountOfParticipants, req.body.price, req.body.imageUrl, req.body.cookId, req.body.createDate, req.body.updateDate, req.body.name, req.body.description, req.body.allergenes, req.body.name, req.body.id], function(err) {
+            connection.query(sql, [req.body.isActive, req.body.isVega, req.body.isVegan, req.body.isToTakeHome, req.body.dateTime, req.body.maxAmountOfParticipants, req.body.price, req.body.imageUrl, req.body.cookId, req.body.createDate, req.body.updateDate, req.body.name, req.body.description, req.body.allergenes, req.body.name, req.body.cookId], function(err, result) {
             if (err) {
                 console.log(err);
                 res.status(400).json({
@@ -59,7 +60,8 @@ module.exports = {
             res.status(200).json({
                 status: "200",
                 // Show updated data
-                message: "Updated!"
+                message: "Updated!",
+                result: result
             });
             });
         });
@@ -96,9 +98,8 @@ module.exports = {
 
     removeMeal: (req, res, next) => {
         // Check if user owns meal through meal_participants_user
-        let getMealquery = "Select * From meal Where id = mealId";
+        let getMealquery = "Select * From meal Where name = ?";
 
-        let deletequery = "Delete From meal Where id = ?";
     
         db.getConnection(function (err, connection) {
             if (err) res.status(500).json({
@@ -106,57 +107,59 @@ module.exports = {
             message: "Connection error"
             });
     
-            connection.query(getMealquery, [req.body.mealId], function(err, results) {
+            connection.query(getMealquery, [req.body.mealname], function(err, results) {
                 if (err) {
                     res.status(500).json({
                         status: "500",
-                        message: "Failed to execute query"
+                        message: "Failed to execute getmeal query"
                     })
                 }
-                if (results < 1) {
+                if (results.length < 1) {
                     res.status(404).json({
                     status: "404",
                     message: "Meal does not exist!"
                     });
-                    throw err;
                 }
+                else{
+                    const mealid = results[0].id;
 
-                let checkusersql = "Select mealId from meal_participants_user Where mealId = ? and userId = ?"
-
-                connection.query(checkusersql, [req.body.mealId, req.body.userId], function(err) {
-                    if (err) {
-                        res.status(500).json({
-                            status: "500",
-                            message: "Failed to execute query"
-                        })
-                    }
-
-                    if (results < 1) {
-                        res.status(403).json({
-                        status: "403",
-                        message: "User does not own meal!"
-                        });
-                        throw err;
-                    }
-
-
-                    connection.query(deletequery, [req.body.mealId], function(err, result) {
+                    let checkusersql = "Select * from meal Where cookId = ? and id = " + mealid
+    
+                    connection.query(checkusersql, [req.body.userId], function(err) {
                         if (err) {
                             res.status(500).json({
                                 status: "500",
-                                message: "Failed to execute query"
+                                message: "Failed to execute checkuser query"
+                            })
+                        }
+    
+                        if (results.length < 1) {
+                            res.status(403).json({
+                            status: "403",
+                            message: "User does not own meal!"
+                            });
+                        }
+                        else {
+                            let deletequery = "Delete From meal Where id = " + mealid + " and cookId = ?";
+    
+                            connection.query(deletequery, [req.body.userId], function(err, result) {
+                                if (err) {
+                                    res.status(500).json({
+                                        status: "500",
+                                        message: "Failed to execute query"
+                                        });
+                                }
+        
+                                res.status(200).json({
+                                status: "200",
+                                message: "Removed!",
+                                result: result
                                 });
+                            });
                         }
 
-                        res.status(200).json({
-                        status: "200",
-                        message: "Removed!",
-                        result: result
-                        });
                     });
-
-
-                });
+                }
             });
         });
     }
