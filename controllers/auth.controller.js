@@ -18,9 +18,9 @@ module.exports = {
             connection.query(queryString, [emailAdress], function(err, results) {
               if (err) {
                 console.log(err);
-                res.status(404).json({
-                  statusCode: "404",
-                  message: "Failed to get user!"
+                res.status(400).json({
+                  statusCode: "400",
+                  message: "No user found with this email!"
                 });
                 throw err;
               }
@@ -45,9 +45,9 @@ module.exports = {
                     });
                 }
                 else {
-                    res.status(401).json({
-                        statusCode: "401",
-                        message: "Login failed"
+                    res.status(400).json({
+                        statusCode: "400",
+                        message: "Password does not match"
                     });
                 }
 
@@ -55,7 +55,7 @@ module.exports = {
               else {
                 res.status(404).json({
                     statusCode: "404",
-                    message: "No results found"
+                    message: "No user found"
                 });
               }
 
