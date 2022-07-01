@@ -14,12 +14,12 @@ jobs:
   test:
       runs-on: ubuntu-latest
       env:
-        MYSQL_ROOT_PASSWORD: ''
-        DB_HOST: 'localhost'
+        MYSQL_ROOT_PASSWORD: 
+        DB_HOST: localhost
         DB_PORT: 3306
-        DB_USER: 'root'
-        DB_PASSWORD: ''
-        DB_DATABASE: 'share_a_meal'
+        DB_USER: 
+        DB_PASSWORD: 
+        DB_DATABASE: share_a_meal
       services:
         mysql:
           image: mysql:5.7
