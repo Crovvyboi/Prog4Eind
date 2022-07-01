@@ -46,7 +46,7 @@ jobs:
 
         - name: Npm test
           run: |
-          npm i -g mocha
+          npm install mocha
           mocha tests/*
           npm test -- --DB_NAME $DB_DATABASE --DB_ROOT_PASSWORD $MYSQL_ROOT_PASSWORD --DB_USER root 
 
