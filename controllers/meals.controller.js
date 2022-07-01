@@ -123,6 +123,7 @@ module.exports = {
                 else{
                     const mealid = results[0].id;
 
+                    // Compare cookID to userid in sessiontoken
                     let checkusersql = "Select * from meal Where cookId = ? and id = " + mealid
     
                     connection.query(checkusersql, [req.body.userId], function(err) {

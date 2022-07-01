@@ -15,57 +15,51 @@ module.exports = {
               message: "Connection error"
             });
         
-            connection.query(queryString, [emailAdress], function(err, results) {
-              if (err) {
-                console.log(err);
-                res.status(400).json({
-                  statusCode: "400",
-                  message: "No user found with this email!"
-                });
-                throw err;
-              }
-
-              if (results && results.length === 1) {
-                console.log(results[0])
-
-                const user = results[0];
-
-                if (user.password === password) {
-
-                    jwt.sign({ userid: user.id }, 'secretstring', {expiresIn: '7d'},  function(err, token) {
-                        if (err) {
-                            console.log(err)
-                        }
-                        if (token) {
-                            console.log("Login successful!")
-                            console.log(token);
-                            next()
-                        }
-                    
-                    });
-                }
-                else {
-                    res.status(400).json({
+            if (connection) {
+                connection.query(queryString, [emailAdress], function(err, rows) {
+                    if (err) {
+                      console.log(err);
+                      res.status(400).json({
                         statusCode: "400",
-                        message: "Password does not match"
-                    });
-                }
+                        message: "No user found with this email!"
+                      });
+                    }
+      
+                    if (rows) {
+                        if (rows && rows.length === 1 && rows[0].password === password) {
 
-              }
-              else {
-                res.status(404).json({
-                    statusCode: "404",
-                    message: "No user id found"
+        
+                            jwt.sign({ userid: rows[0].id }, 'secretstring', {expiresIn: '1h'},  function(err, token) {
+                                if (err) {
+                                    console.log(err)
+                                }
+                                if (token) {
+                                    console.log("Login successful!")
+                                    // Apply created token to .env
+                                    res.status(200).json({
+                                        statusCode: 200,
+                                        results: token ,
+                                    })
+                                    next()
+                                }
+                            
+                            });
+                        }
+                        else {
+                            res.status(400).json({
+                                statusCode: "400",
+                                message: "Password does not match"
+                            });
+                        }
+            
+                    }
                 });
-              }
-
-              
-            });
+            }  
         });
     },
 
     validate: (req, res, next) => {
-        const authHeader = req.headers.authorization || process.env.TOKEN_HEADER
+        const authHeader = req.header("Authorization")
         var jwtSecretKey = 'secretstring'
         if (!authHeader) {
             console.log('Authorization header missing!')
@@ -92,6 +86,26 @@ module.exports = {
                     req.userId = payload.userId
                     next()
                 }
+            })
+        }
+    },
+
+    validateLogin(req, res, next) {
+        // Verify that we receive the expected input
+        try {
+            assert(
+                typeof req.body.emailAdress === 'string',
+                'email must be a string.'
+            )
+            assert(
+                typeof req.body.password === 'string',
+                'password must be a string.'
+            )
+            next()
+        } catch (ex) {
+            res.status(422).json({
+                error: ex.toString(),
+                datetime: new Date().toISOString(),
             })
         }
     }

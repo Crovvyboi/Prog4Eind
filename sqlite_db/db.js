@@ -8,25 +8,24 @@
 // online db
 const mysql = require('mysql');
 require('dotenv').config();
-const pool = mysql.createPool({
-
+const dbConfig = {
     connectionLimit : 10,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
+}
 
-});
-
-module.exports = pool;
-
+const pool = mysql.createPool(dbConfig);
 
 
 pool.on('acquire', function (connection) {
-    console.log('connection %d acquired', connection.threadID);
+    console.log(`connection acquired`, connection.threadID);
 });
 
 pool.on('release', function (connection) {
-    console.log('connection %d released', connection.threadID);
+    console.log(`connection released`, connection.threadID);
 });
+
+module.exports = pool;
