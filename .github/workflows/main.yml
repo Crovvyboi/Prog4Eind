@@ -19,7 +19,7 @@ jobs:
         DB_PORT: 3306
         DB_USER: 'root'
         DB_PASSWORD: ''
-        DB_DATABASE: 'share-a-meal'
+        DB_DATABASE: "share-a-meal"
       services:
         mysql:
           image: mysql:5.7
