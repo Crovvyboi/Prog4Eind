@@ -11,7 +11,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  integrationtests:
+  test:
       runs-on: ubuntu-latest
 
       env:
@@ -47,7 +47,7 @@ jobs:
 
         - name: Npm test
           run: |
-            npm test -- --DB_PASSWORD $MYSQL_ROOT_PASSWORD --DB_USER root --DB_NAME $DB_DATABASE
+            npm test
 
         # steps:
         # - uses: actions/checkout@v3
