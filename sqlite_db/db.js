@@ -21,7 +21,7 @@ const pool = mysql.createPool(dbConfig);
 
 
 pool.on('acquire', function (connection) {
-    console.log(`connection acquired`, connection.threadID);
+    console.log(`connection ` + process.env.DB_DATABASE + ` acquired`, connection.threadID);
 });
 
 pool.on('release', function (connection) {

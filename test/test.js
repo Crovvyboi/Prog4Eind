@@ -1,11 +1,11 @@
-process.env.DB_DATABASE = process.env.DB_DATABASE || 'share-a-meal-testdb'
-process.env.LOGLEVEL = 'warn'
+
 
 const app = require("../app");
 const chaiHTTP = require("chai-http");
 const chai = require("chai");
 var db = require('../sqlite_db/db');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { exit } = require("process");
 require('dotenv').config();
 
 let assert = require('assert').strict;
@@ -13,6 +13,9 @@ let assert = require('assert').strict;
 const {expect} = chai;
 chai.should();
 chai.use(chaiHTTP);
+
+process.env.DB_DATABASE = 'share-a-meal-testdb'
+process.env.LOGLEVEL = 'warn'
 
 /**
  * Db queries to clear and fill the test database before each test.
@@ -26,28 +29,19 @@ const CLEAR_USERS_TABLE = "DELETE FROM user; "
  * Deze id kun je als foreign key gebruiken in de andere queries, bv insert meal.
  */
 const INSERT_USER =
-    'INSERT INTO user (id, firstName, lastName, emailAdress, password, street, city ) VALUES ' +
-    '(1, "first", "last", "name@server.nl", "secret", "street", "city");'
+    "INSERT INTO user (id, firstName, lastName, emailAdress, password, street, city ) VALUES " +
+    "(1, 'first', 'last', 'name@server.nl', 'secret', 'street', 'city');"
 
 /**
  * Query om twee meals toe te voegen. Let op de cookId, die moet matchen
  * met een bestaande user in de database.
  */
 const INSERT_MEALS =
-    'INSERT INTO meal (`id`, `name`, `description`, `imageUrl`, `dateTime`, `maxAmountOfParticipants`, `price`, `cookId`) VALUES' +
+    "INSERT INTO meal (id, name, description, imageUrl, dateTime, maxAmountOfParticipants, price, cookId) VALUES" +
     "(1, 'Meal A', 'description', 'image url', NOW(), 5, 6.50, 1)," +
     "(2, 'Meal B', 'description', 'image url', NOW(), 5, 6.50, 1);"
 
 describe('Assert API', function() {
-    before((done) => {
-        console.log(
-            'before: hier zorg je eventueel dat de precondities correct zijn'
-        )
-        console.log('before done')
-        done()
-    })
-
-
 
     describe('Call user functions', function () {
         beforeEach((done) => {
@@ -99,8 +93,6 @@ describe('Assert API', function() {
                         done()
                     }
                 )
-
-                console.log('beforeEach executed!')
 
             })
         })
@@ -157,10 +149,14 @@ describe('Assert API', function() {
             });
         });
 
-        it.skip('/api/users?id=3&isActive=1', function(done) {
+        it('/api/users?id=3&isActive=1', function(done) {
             chai
             .request(app)
             .get('/api/users?id=3&isActive=1')
+            .set(
+                'authorization',
+                'Bearer ' + jwt.sign({ id: 1 }, "secretstring")
+            )
             .end((err, res) => {
                 assert.ifError(err)
                 res.should.have.status(200);
@@ -182,10 +178,14 @@ describe('Assert API', function() {
 
         }
 
-        it.skip('/api/users/post', function(done) {
+        it('/api/users/post', function(done) {
             chai
             .request(app)
             .post('/api/users')
+            .set(
+                'authorization',
+                'Bearer ' + jwt.sign({ id: 1 }, "secretstring")
+            )
              .send(newUser)
             .end((err, res) => {
                 assert.ifError(err)
@@ -199,6 +199,10 @@ describe('Assert API', function() {
             chai
             .request(app)
             .get('/api/users')
+            .set(
+                'authorization',
+                'Bearer ' + jwt.sign({ id: 1 }, "secretstring")
+            )
              .send(newUser)
             .end((err, res) => {
                 assert.ifError(err)
@@ -252,10 +256,14 @@ describe('Assert API', function() {
             "password": "pw"
         }
 
-        it.skip('/api/users/update', function(done) {
+        it('/api/users/update', function(done) {
             chai
             .request(app)
             .put('/api/users')
+            .set(
+                'authorization',
+                'Bearer ' + jwt.sign({ id: 1 }, "secretstring")
+            )
              .send(updatedUser)
             .end((err, res) => {
                 assert.ifError(err)
@@ -270,10 +278,14 @@ describe('Assert API', function() {
             "password": "pw"
         }
 
-        it.skip('/api/users/remove', function(done) {
+        it('/api/users/remove', function(done) {
             chai
             .request(app)
             .del('/api/users')
+            .set(
+                'authorization',
+                'Bearer ' + jwt.sign({ id: 1 }, "secretstring")
+            )
              .send(deleteUser)
             .end((err, res) => {
                 assert.ifError(err)

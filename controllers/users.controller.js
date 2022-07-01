@@ -10,7 +10,6 @@ module.exports = {
     /* GET user listing. */
     getUsers: (req, res, next) => {
 
-
         let {id, isActive} = req.query;
 
         let sql = 'Select * From user';
@@ -46,6 +45,7 @@ module.exports = {
             } 
 
             console.log('#results = ' + results.length);
+            console.log(process.env.TOKEN_HEADER)
             res.status(200).json({
                 statusCode: "200",
                 results: results
@@ -117,6 +117,7 @@ module.exports = {
         }
     },
     
+    // Use token to get profile
     getUserProfile: (req, res, next) => {
         db.getConnection(function (err, connection) {
         if (err) res.status(500).json({
