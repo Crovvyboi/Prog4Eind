@@ -46,7 +46,7 @@ jobs:
 
         - name: Npm test
           run: |
-            npm test -- root $DB_DATABASE
+            npm test
 
         # steps:
         # - uses: actions/checkout@v3
