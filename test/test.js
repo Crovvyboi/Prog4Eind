@@ -49,7 +49,58 @@ describe('Assert API', function() {
         // Check status codes & describe tests better
 
         describe('User get tests', function () {
-
+            beforeEach((done) => {
+                console.log('beforeEach called')
+                // maak de testdatabase leeg zodat we onze testen kunnen uitvoeren.
+                db.getConnection(function (err, connection) {
+                    if (err) throw err // not connected!
+    
+                    // Use the connection
+                    // Each query has to be executed seperately, since combining these will result in an error
+                    // Tested the combined queries externally, returned an error
+                    connection.query(
+                        CLEAR_MEAL_TABLE,
+                        function (error, results, fields) {
+                            // Handle error after the release.
+                            if (error) throw error
+                        }
+                    )
+                    connection.query(
+                        CLEAR_PARTICIPANTS_TABLE,
+                        function (error, results, fields) {
+                            // Handle error after the release.
+                            if (error) throw error
+                        }
+                    )
+                    connection.query(
+                        CLEAR_USERS_TABLE,
+                        function (error, results, fields) {
+                            // Handle error after the release.
+                            if (error) throw error
+                        }
+                    )
+                    connection.query(
+                        INSERT_USER,
+                        function (error, results, fields) {
+                            // Handle error after the release.
+                            if (error) throw error
+                        }
+                    )
+                    connection.query(
+                        INSERT_MEALS,
+                        function (error, results, fields) {
+                            // When done with the connection, release it.
+                            connection.release()
+    
+                            // Handle error after the release.
+                            if (error) throw error
+    
+                            done()
+                        }
+                    )
+    
+                })
+            })
 
             it('200: get all users', (done) => {
                 chai
