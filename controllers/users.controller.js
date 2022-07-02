@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 // Connect to db
 var db = require('../sqlite_db/db');
+const { isatty } = require('tty');
 require('dotenv').config();
 
 module.exports = {
@@ -19,16 +20,15 @@ module.exports = {
         if (id || isActive) {
             sql += ' Where '
             if (id) {
-               sql += `id = ?` 
+               sql += `id = ` + id
             }
             if (id && isActive) {
                 sql += ' And '
             }
             if (isActive) {
-                sql += `isActive = ?`
+                sql += `isActive = ` + isActive
             }
         }
-
 
         db.getConnection(function (err, connection) {
             if (err) res.status(500).json({
@@ -38,19 +38,19 @@ module.exports = {
             connection.query(sql, [id, isActive], function (error, results, fields) {
             connection.release();
 
-            if (error){
+            if (results.length == 0) {
                 res.status(400).json({
-                statusCode: "400",
-                message: "Could not get users"
-                })
-            } 
-
-            console.log('#results = ' + results.length);
-            console.log(process.env.TOKEN_HEADER)
-            res.status(200).json({
-                statusCode: "200",
-                results: results
-            });
+                    statusCode: "400",
+                    results: "No users found"
+                });
+            }
+            else {
+                console.log('#results = ' + results.length);
+                    res.status(200).json({
+                        statusCode: "200",
+                        results: results
+                    });
+                }
             });
         });
     },
@@ -74,48 +74,54 @@ module.exports = {
             message: "Required field empty"
         });
         }
-    
-        // Insert email RegEx
-        let regEx =  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-        if (!regEx.test(req.body.email)) {
-            res.status(400).json({
-                statusCode: "400",
-                message: "Email does not meet requirements"
-            });
-        }
-        else{
-                
-            db.getConnection(function (err, connection) {
-                if (err) res.status(500).json({
-                    statusCode: "500",
-                    message: "Connection error"
+        else {
+            // Insert email RegEx
+            let regEx =  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+            if (!regEx.test(req.body.email)) {
+                res.status(400).json({
+                    statusCode: "400",
+                    message: "Email does not meet requirements"
                 });
-
-                connection.query(checkusersql, [req.body.email], function(error, results, fields) {
-                    if (results > 0) {
-                    res.status(409).json({
-                        statusCode: "409",
-                        message: "User already exists",
-                    });
-                    }
-
-                    connection.query(sql, [req.body.firstname, req.body.lastname, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber, req.body.roles, req.body.street, req.body.city], function(err, results) {
-                    if (err) {
-                        res.status(409).json({
-                        statusCode: "409",
-                        message: "Failed to insert!"
+            }
+            else{
+                    
+                db.getConnection(function (err, connection) {
+                    if (err) res.status(500).json({
+                        statusCode: "500",
+                        message: "Connection error"
+                    })
+                    else {
+                        connection.query(checkusersql, [req.body.email], function(error, results, fields) {
+                            if (results > 0) {
+                            res.status(409).json({
+                                statusCode: "409",
+                                message: "User already exists",
+                            });
+                            }
+                            else {
+                                connection.query(sql, [req.body.firstname, req.body.lastname, req.body.isActive, req.body.email, req.body.password, req.body.phonenumber, req.body.roles, req.body.street, req.body.city], function(err, results) {
+                                    if (err) {
+                                        res.status(409).json({
+                                        statusCode: "409",
+                                        message: "Failed to insert!"
+                                        });
+                                    }
+                                    else {
+                                        res.status(201).json({
+                                            statusCode: "201",
+                                            message: "Inserted!",
+                                            result: results
+                                        });
+                                    }
+                                });
+                            }
                         });
                     }
-                
-                    res.status(201).json({
-                        statusCode: "201",
-                        message: "Inserted!",
-                        result: results
-                    });
-                    });
                 });
-            });
+            }
         }
+    
+        
     },
     
     // Use token to get profile
@@ -147,11 +153,8 @@ module.exports = {
                     })
                 }
                 if (payload) {
-                    console.log('token is valid', payload)
-
                     connection.query("Select * From user Where id = " + payload.id, function(err, data) {
-                        if (err) {
-                            console.log(err);
+                        if (data.length == 0) {
                             res.status(400).json({
                                 statusCode: "400",
                                 message: "Could not get user"
@@ -183,11 +186,13 @@ module.exports = {
             });
         }
         else {
+            
             db.getConnection(function (err, connection) {
                 if (err) res.status(500).json({
                     statusCode: "500",
                     message: "Connection error"
                 });
+
             
                 connection.query(sql, [req.body.firstname, req.body.lastname, req.body.street, req.body.city, req.body.isActive, req.body.phonenumber, req.body.email, req.body.password], function(err, results) {
                     if (err) {
@@ -202,7 +207,7 @@ module.exports = {
                             status: "200",
                             message: "Updated!",
                             results: results
-                            });
+                        });
                     }
             
 

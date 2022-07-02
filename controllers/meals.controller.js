@@ -40,8 +40,6 @@ module.exports = {
                             })
                         }
                         if (payload) {
-                            console.log('token is valid', payload)
-
                             connection.query(sql, [req.body.isActive, req.body.isVega, req.body.isVegan, req.body.isToTakeHome, req.body.dateTime, req.body.maxAmountOfParticipants, req.body.price, req.body.imageUrl, payload.id, req.body.createDate, req.body.updateDate, req.body.name, req.body.description, req.body.allergenes], function(err, result) {
                                 if (err) {
                                     res.status(409).json({
@@ -102,9 +100,7 @@ module.exports = {
                             })
                         }
                         if (payload) {
-                            console.log('token is valid', payload)
-
-                            connection.query(sql, [req.body.isActive, req.body.isVega, req.body.isVegan, req.body.isToTakeHome, req.body.dateTime, req.body.maxAmountOfParticipants, req.body.price, req.body.imageUrl, payload.id, req.body.createDate, req.body.updateDate, req.body.name, req.body.description, req.body.allergenes, req.body.name, payload.id], function(error, result) {
+                             connection.query(sql, [req.body.isActive, req.body.isVega, req.body.isVegan, req.body.isToTakeHome, req.body.dateTime, req.body.maxAmountOfParticipants, req.body.price, req.body.imageUrl, payload.id, req.body.createDate, req.body.updateDate, req.body.name, req.body.description, req.body.allergenes, req.body.name, payload.id], function(error, result) {
                                 if (error) {
                                     console.log(error);
                                     res.status(400).json({
@@ -208,7 +204,6 @@ module.exports = {
                                 })
                             }
                             if (payload) {
-                                console.log('token is valid', payload)
 
                                 // Compare cookID to userid in sessiontoken
                                 let checkusersql = "Select * from meal Where cookId = " + payload.id + " and id = " + mealid
