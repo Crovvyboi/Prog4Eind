@@ -21,11 +21,11 @@ DB_PORT: 25060
 DB_USER: 2125078
 DB_DATABASE: 2125078
 DB_PASSWORD: secret 
-      services:
-        mysql:
-          image: mysql:5.7
-          ports:
-            - 3306
+      # services:
+      #   mysql:
+      #     image: mysql:5.7
+      #     ports:
+      #       - 3306
       steps: 
         - uses: actions/checkout@v2
 
