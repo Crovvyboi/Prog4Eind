@@ -43,6 +43,7 @@ jobs:
 
         - name: Install npm
           run: |
+            sudo rm -rf node_modules.
             npm install
 
         - name: Npm test
