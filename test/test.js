@@ -13,6 +13,7 @@ const {expect} = chai;
 chai.should();
 chai.use(chaiHTTP);
 
+process.env.DB_DATABASE = 'share_a_meal_testdb'
 process.env.LOGLEVEL = 'warn'
 
 /**
