@@ -47,6 +47,7 @@ jobs:
 
         - name: Npm test
           run: |
+                      sudo /etc/init.d/mysql start
             npm test -- --DB_PASSWORD $MYSQL_ROOT_PASSWORD --DB_USER root --DB_NAME $DB_DATABASE
 
         # steps:
