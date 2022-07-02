@@ -15,7 +15,7 @@ jobs:
       runs-on: ubuntu-latest
 
       env:
-        MYSQL_ROOT_PASSWORD: 'root'
+        - MYSQL_ROOT_PASSWORD=root
         DB_HOST: 'localhost'
         DB_PORT: 3310
         DB_DATABASE: 'share_a_meal'
