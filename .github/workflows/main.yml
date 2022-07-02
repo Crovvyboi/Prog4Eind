@@ -14,13 +14,13 @@ jobs:
   test:
       runs-on: ubuntu-latest
 
-      env:
-        MYSQL_ROOT_PASSWORD: root
-DB_HOST: 'db-mysql-ams3-37313-do-user-2119860-0.b.db.ondigitalocean.com'
-DB_PORT: 25060
-DB_USER: 2125078
-DB_DATABASE: 2125078
-DB_PASSWORD: 'secret' 
+#       env:
+#         MYSQL_ROOT_PASSWORD: root
+# DB_HOST: 'db-mysql-ams3-37313-do-user-2119860-0.b.db.ondigitalocean.com'
+# DB_PORT: 25060
+# DB_USER: 2125078
+# DB_DATABASE: 2125078
+# DB_PASSWORD: 'secret' 
       # services:
       #   mysql:
       #     image: mysql:5.7
