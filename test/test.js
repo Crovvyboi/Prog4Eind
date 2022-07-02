@@ -5,7 +5,6 @@ const chaiHTTP = require("chai-http");
 const chai = require("chai");
 var db = require('../sqlite_db/db');
 const jwt = require('jsonwebtoken');
-const { exit } = require("process");
 require('dotenv').config();
 
 let assert = require('assert').strict;
