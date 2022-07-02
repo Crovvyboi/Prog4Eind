@@ -25,7 +25,7 @@ jobs:
         mysql:
           image: mysql:5.7
           ports:
-            - 3306
+            - 3310
       steps: 
         - uses: actions/checkout@v2
 
