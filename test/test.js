@@ -99,8 +99,9 @@ describe('Assert API', function() {
 
         // Cover errors
         // Specify result tests
-        // Check status codes
-        // Add authorization headers
+        // Check status codes & describe tests better
+
+
         it('/api/users', (done) => {
             chai
             .request(app)
@@ -195,15 +196,14 @@ describe('Assert API', function() {
             });
         });
 
-        it.skip('/api/users/profile', function(done) {
+        it('/api/users/profile', function(done) {
             chai
             .request(app)
-            .get('/api/users')
+            .get('/api/users/profile')
             .set(
                 'authorization',
                 'Bearer ' + jwt.sign({ id: 1 }, "secretstring")
             )
-             .send(newUser)
             .end((err, res) => {
                 assert.ifError(err)
                 res.should.have.status(200);
@@ -298,10 +298,14 @@ describe('Assert API', function() {
     });
     describe('Call meal functions', function () {
         
-        it.skip('/api/meals', function(done) {
+        it('/api/meals', function(done) {
             chai
             .request(app)
             .get('/api/meals')
+            .set(
+                'authorization',
+                'Bearer ' + jwt.sign({ id: 1 }, "secretstring")
+            )
             .end((err, res) => {
                 if (err) {
                     done(err);
@@ -312,9 +316,7 @@ describe('Assert API', function() {
         });
         
         const newmeal = {
-            "emailAdress": "m.vandam@server.nl",
-            "password": "secret",
-        
+      
             "isActive": "1", 
             "isVega": "0", 
             "isVegan": "0", 
@@ -323,7 +325,6 @@ describe('Assert API', function() {
             "maxAmountOfParticipants": "4", 
             "price": "12.75", 
             "imageUrl": "https://miljuschka.nl/wp-content/uploads/2021/02/Pasta-bolognese-3-2.jpg", 
-            "cookId": "4", 
             "createDate": "2022-02-26 18:12:40.048998", 
             "updateDate": "2022-04-26 12:33:51.000000", 
             "name": "testmeal", 
@@ -331,10 +332,15 @@ describe('Assert API', function() {
             "allergenes": "gluten,lactose"
         }
 
-        it.skip('/api/meals/post', function(done) {
+        it('/api/meals/post', function(done) {
+
             chai
             .request(app)
-            .post('/api/meals/post')
+            .post('/api/meals')
+            .set(
+                'authorization',
+                'Bearer ' + jwt.sign({ id: 1 }, "secretstring")
+            )
              .send(newmeal)
             .end((err, res) => {
                 if (err) {
@@ -346,8 +352,6 @@ describe('Assert API', function() {
         });
 
         const updatemeal = {
-            "emailAdress": "m.vandam@server.nl",
-            "password": "secret",
         
             "isActive": "1", 
             "isVega": "1", 
@@ -357,7 +361,6 @@ describe('Assert API', function() {
             "maxAmountOfParticipants": "4", 
             "price": "12.75", 
             "imageUrl": "https://miljuschka.nl/wp-content/uploads/2021/02/Pasta-bolognese-3-2.jpg", 
-            "cookId": "4", 
             "createDate": "2022-02-26 18:12:40.048998", 
             "updateDate": "2022-04-26 12:33:51.000000", 
             "name": "testmeal", 
@@ -365,10 +368,15 @@ describe('Assert API', function() {
             "allergenes": "gluten,lactose"
         }
 
-        it.skip('/api/meals/update', function(done) {
+        it('/api/meals/update', function(done) {
+
             chai
             .request(app)
-            .put('/api/meals/update')
+            .put('/api/meals')
+            .set(
+                'authorization',
+                'Bearer ' + jwt.sign({ id: 1 }, "secretstring")
+            )
              .send(updatemeal)
             .end((err, res) => {
                 if (err) {
@@ -380,17 +388,19 @@ describe('Assert API', function() {
         });
 
         const removemeal = {
-            "emailAdress": "m.vandam@server.nl",
-            "password": "secret",
         
             "mealname": "testmeal",
-            "userId": "4"
         }
 
-        it.skip('/api/meals/remove', function(done) {
+        // Get user id with token
+        it('/api/meals/remove', function(done) {
             chai
             .request(app)
-            .del('/api/meals/remove')
+            .del('/api/meals')
+            .set(
+                'authorization',
+                'Bearer ' + jwt.sign({ id: 1 }, "secretstring")
+            )
              .send(removemeal)
             .end((err, res) => {
                 if (err) {

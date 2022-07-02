@@ -35,8 +35,7 @@ module.exports = {
                                 }
                                 if (token) {
                                     console.log("Login successful!")
-                                    // Apply created token to .env
-                                    process.env.TOKEN_HEADER = token.toString()
+                                   
                                     res.status(200).json({
                                         statusCode: 200,
                                         results: token ,

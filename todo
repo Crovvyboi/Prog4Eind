@@ -2,10 +2,10 @@
     - Heroku test met gegevens op heroku, Git test met gegevens op Git (Allemaal met keys, kan dus niet lokaal)
     - Tests aanpassen op nieuwe routes + include login test
 
-- Logging & Token validation
+# - Logging & Token validation
     # - Get ID en maak token daarmee op login. Wanneer een functie aangeroepen wordt, verkrijg de token van de eigenaar van het product/user en cross reference id's
     # - Doe een eenmalige login voordat de user toegang heeft tot functies
-    - Bij removing meals bijvoorbeeld wordt de cookID vergeleken met de userid key in de token, ipv direct vergelijken met een hardcoded userid
+    # - Bij removing meals bijvoorbeeld wordt de cookID vergeleken met de userid key in de token, ipv direct vergelijken met een hardcoded userid
 
 # - Endpoints
 #     - Alle endpoints eindigen op /users bijvoorbeeld. De API neemt de voorzetsels (get, put, enz.) en past ze toe op de endpoint

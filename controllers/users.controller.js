@@ -1,6 +1,7 @@
 var express = require('express');
 const { json } = require('express/lib/response');
 const assert = require('assert');
+const jwt = require('jsonwebtoken');
 
 // Connect to db
 var db = require('../sqlite_db/db');
@@ -123,24 +124,49 @@ module.exports = {
         if (err) res.status(500).json({
             statusCode: "500",
             message: "Connection error"
-        });
-    
-        connection.query("Select * From user Where emailAdress = ?", req.body.email, function(err, data) {
-            if (err) {
-            console.log(err);
-            res.status(400).json({
-                statusCode: "400",
-                message: "Could not get user"
+        })
+
+        const authHeader = req.header("Authorization")
+        var jwtSecretKey = 'secretstring'
+
+        if (!authHeader) {
+            console.log('Authorization header missing!')
+            res.status(401).json({
+                error: 'Authorization header missing!',
+                datetime: new Date().toISOString(),
             })
-            }
-    
-            console.log("Functie nog niet gerealiseerd");
-            res.status(200).json({
-            statusCode: "200",
-            results: data});
-    
-        });
-        });
+        } else {
+            // Strip the word 'Bearer ' from the headervalue
+            const token = authHeader.substring(7, authHeader.length)
+            jwt.verify(token, jwtSecretKey, (err, payload) => {
+                if (err) {
+                    console.log('Not authorized')
+                    res.status(401).json({
+                        error: 'Not authorized',
+                        datetime: new Date().toISOString(),
+                    })
+                }
+                if (payload) {
+                    console.log('token is valid', payload)
+
+                    connection.query("Select * From user Where id = " + payload.id, function(err, data) {
+                        if (err) {
+                            console.log(err);
+                            res.status(400).json({
+                                statusCode: "400",
+                                message: "Could not get user"
+                            })
+                        }
+                        else {
+                            res.status(200).json({
+                            statusCode: "200",
+                            results: data
+                            });
+                        }
+                    });
+                }
+            })
+        }});
     },
 
     
