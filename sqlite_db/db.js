@@ -6,7 +6,7 @@
 // module.exports = db;
 
 // online db
-const mysql = require('mysql');
+const mysql = require('mysql2');
 require('dotenv').config();
 const dbConfig = {
     connectionLimit : 10,
