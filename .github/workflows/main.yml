@@ -31,7 +31,7 @@ jobs:
 
         - name: Start connection from localhost
           run: |
-            sudo /etc/init.d/mysql mysqld start
+            sudo /etc/init.d/mysql start
             sudo apt-get install -y mysql-client
             mysql -uroot -p${{ env.MYSQL_ROOT_PASSWORD }} -e "SHOW DATABASES;"
             mysql -uroot -p${{ env.MYSQL_ROOT_PASSWORD }} -e "CREATE DATABASE ${{ env.DB_DATABASE }};"
