@@ -1,6 +1,3 @@
-var express = require('express');
-const { json } = require('express/lib/response');
-const assert = require('assert');
 const jwt = require('jsonwebtoken');
 
 // Connect to db
@@ -40,7 +37,8 @@ module.exports = {
                             })
                         }
                         if (payload) {
-                            connection.query(sql, [req.body.isActive, req.body.isVega, req.body.isVegan, req.body.isToTakeHome, req.body.dateTime, req.body.maxAmountOfParticipants, req.body.price, req.body.imageUrl, payload.id, req.body.createDate, req.body.updateDate, req.body.name, req.body.description, req.body.allergenes], function(err, result) {
+                            const cookID = payload.id
+                            connection.query(sql, [req.body.isActive, req.body.isVega, req.body.isVegan, req.body.isToTakeHome, req.body.dateTime, req.body.maxAmountOfParticipants, req.body.price, req.body.imageUrl, cookID, req.body.createDate, req.body.updateDate, req.body.name, req.body.description, req.body.allergenes], function(err, result) {
                                 if (err) {
                                     res.status(409).json({
                                     statusCode: "409",
@@ -133,6 +131,7 @@ module.exports = {
         // Check for inserted parameters (isactive / name)
       
         db.getConnection(function (err, connection) {
+            console.log('catch')
             if (err) res.status(500).json({
               statusCode: "500",
               message: "Connection error"
@@ -204,10 +203,10 @@ module.exports = {
                                 })
                             }
                             if (payload) {
-
+                                const cookID = payload.id
                                 // Compare cookID to userid in sessiontoken
-                                let checkusersql = "Select * from meal Where cookId = " + payload.id + " and id = " + mealid
-                
+                                let checkusersql = "Select * from meal Where cookId = " + cookID + " and id = " + mealid
+                                
                                 connection.query(checkusersql, function(err) {
                                     if (err) {
                                         res.status(500).json({
@@ -222,7 +221,7 @@ module.exports = {
                                         });
                                     }
                                     else {
-                                        let deletequery = "Delete From meal Where id = " + mealid + " and cookId = " + payload.id;
+                                        let deletequery = "Delete From meal Where id = " + mealid + " and cookId = " + cookID;
                 
                                         connection.query(deletequery, function(error, result) {
                                             if (error) {

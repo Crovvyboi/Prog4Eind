@@ -49,7 +49,8 @@ jobs:
         - name: Npm test
           run: |
             npm i -g mocha
-            npm test -- --DB_PASSWORD $MYSQL_ROOT_PASSWORD --DB_USER root --DB_NAME $DB_DATABASE
+            npm usertest -- --DB_PASSWORD $MYSQL_ROOT_PASSWORD --DB_USER root --DB_NAME $DB_DATABASE
+            npm mealtest -- --DB_PASSWORD $MYSQL_ROOT_PASSWORD --DB_USER root --DB_NAME $DB_DATABASE
 
         # steps:
         # - uses: actions/checkout@v3

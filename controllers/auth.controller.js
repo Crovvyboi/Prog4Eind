@@ -7,55 +7,76 @@ module.exports = {
 
         const {emailAdress, password} = req.body;
 
-        const queryString = "Select id, firstName, lastName, emailAdress, password From user Where emailAdress = ?";
-
-        db.getConnection(function (err, connection) {
-            if (err) res.status(500).json({
-              statusCode: "500",
-              message: "Connection error"
+        if (emailAdress == '' || password == '') {
+            return res.status(400).json({
+                statusCode: "400",
+                message: "Required field missing!"
             });
-        
-            if (connection) {
-                connection.query(queryString, [emailAdress], function(err, rows) {
-                    if (err) {
-                      console.log(err);
-                      res.status(400).json({
-                        statusCode: "400",
-                        message: "No user found with this email!"
-                      });
-                    }
-      
-                    if (rows) {
-                        if (rows && rows.length === 1 && rows[0].password === password) {
+        }
 
-        
-                            jwt.sign({ userid: rows[0].id }, 'secretstring', {expiresIn: '1h'},  function(err, token) {
-                                if (err) {
-                                    console.log(err)
-                                }
-                                if (token) {
-                                    console.log("Login successful!")
-                                   
-                                    res.status(200).json({
-                                        statusCode: 200,
-                                        results: token ,
-                                    })
-                                    next()
-                                }
-                            
-                            });
-                        }
-                        else {
-                            res.status(400).json({
-                                statusCode: "400",
-                                message: "Password does not match"
-                            });
-                        }
-            
-                    }
+        let regEx =  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        if (!regEx.test(emailAdress)) {
+            res.status(400).json({
+                statusCode: "400",
+                message: "Email does not meet requirements"
+            });
+        }
+        else{
+            const queryString = "Select id, firstName, lastName, emailAdress, password From user Where emailAdress = ?";
+
+            db.getConnection(function (err, connection) {
+                if (err) res.status(500).json({
+                  statusCode: "500",
+                  message: "Connection error"
                 });
-            }  
-        });
+            
+                if (connection) {
+                    connection.query(queryString, [emailAdress], function(err, rows) {
+                        if (err) {
+                          console.log(err);
+                          res.status(400).json({
+                            statusCode: "400",
+                            message: "Could not run query"
+                          });
+                        }
+                        if (rows && rows.length === 0) {
+                            res.status(404).json({
+                                statusCode: "404",
+                                message: "Gebruiker bestaat niet"
+                            });
+                        }      
+                        else if (rows) {
+                            if (rows && rows.length === 1 && rows[0].password === password) {
+    
+            
+                                jwt.sign({ userid: rows[0].id }, 'secretstring', {expiresIn: '1h'},  function(err, token) {
+                                    if (err) {
+                                        console.log(err)
+                                    }
+                                    if (token) {
+                                        console.log("Login successful!")
+                                       
+                                        res.status(200).json({
+                                            statusCode: 200,
+                                            results: token
+                                        })
+                                        next()
+                                    }
+                                
+                                });
+                            }
+                            else {
+                                res.status(400).json({
+                                    statusCode: "400",
+                                    message: "Password does not match"
+                                });
+                            }
+                
+                        }
+                    });
+                }  
+            });
+        }
     },
 
     validate: (req, res, next) => {

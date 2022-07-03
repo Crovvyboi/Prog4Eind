@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "test": "mocha -reporter spec test/test.js --exit"
+    "test": "npm run rudtest && npm run userreadtest && npm run mealtest",
+    "rudtest": "mocha test/test.js --timeout 4000 --exit",
+    "userreadtest": "mocha test/usergettest.js --timeout 4000 --exit",
+    "mealtest": "mocha test/mealtest.js --timeout 4000 --exit"
   },
   "dependencies": {
     "body-parser": "^1.20.0",
