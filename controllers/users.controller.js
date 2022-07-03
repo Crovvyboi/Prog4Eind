@@ -208,7 +208,7 @@ module.exports = {
 
     
     updateUser: (req, res, next) => {
-        let sql = "Update user Set firstName = ?, lastName = ?, street = ?, city = ?, isActive = ?, phoneNumber = ? " +
+        let sql = "Update user Set firstName = '?', lastName = '?', street = '?', city = '?', isActive = '?', phoneNumber = '?' " +
         "Where emailAdress = ? And password = ?";
     
         // Check phonenumber regex
@@ -286,7 +286,7 @@ module.exports = {
     deleteUser: (req, res, next) => {
 
         let sql = "Delete From user " +
-        "Where emailAdress = ? And password = ?";
+        "Where emailAdress = '?' And password = '?'";
         let finduser = "Select id from user Where emailAdress = ?"
     
         db.getConnection(function (err, connection) {
