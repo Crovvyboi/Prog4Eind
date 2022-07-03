@@ -1,7 +1,7 @@
-- Teststraat renieuwen
-    - Heroku test met gegevens op heroku, Git test met gegevens op Git (Allemaal met keys, kan dus niet lokaal)
-    - Tests aanpassen op nieuwe routes + include login test
-    - Verander email in user exists test 409
+# - Teststraat renieuwen
+#     - Heroku test met gegevens op heroku, Git test met gegevens op Git (Allemaal met keys, kan dus niet lokaal)
+#     - Tests aanpassen op nieuwe routes + include login test
+#     - Verander email in user exists test 409
 
 # - Logging & Token validation
     # - Get ID en maak token daarmee op login. Wanneer een functie aangeroepen wordt, verkrijg de token van de eigenaar van het product/user en cross reference id's
@@ -13,3 +13,5 @@
 
 - Readme volledig maken
     - Welke parameters moeten meegegeven worden?
+
+- Postman functies
