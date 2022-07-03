@@ -48,9 +48,8 @@ module.exports = {
                             }      
                             else if (rows) {
                                 if (rows && rows.length === 1 && rows[0].password === password) {
-        
                 
-                                    jwt.sign({ userid: rows[0].id }, 'secretstring', {expiresIn: '1h'},  function(err, token) {
+                                    jwt.sign({ id: rows[0].id }, 'secretstring', {expiresIn: '1h'},  function(err, token) {
                                         if (err) {
                                             console.log(err)
                                         }
@@ -108,7 +107,7 @@ module.exports = {
                     console.log('token is valid', payload)
                     // User heeft toegang. Voeg UserId uit payload toe aan
                     // request, voor ieder volgend endpoint.
-                    req.userId = payload.userId
+                    req.id = payload.id
                     next()
                 }
             })

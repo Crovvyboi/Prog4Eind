@@ -88,10 +88,10 @@ module.exports = {
 
     updateMeal: (req, res, next) => {
         // Check if user owns meal through meal_participants_user
-        let sql = "Update meal Set isActive = '?',  isVega = '?', isVegan = '?', isToTakeHome = '?', dateTime = '?' " +
-        ", maxAmountOfParticipants = '?', price = '?', imageUrl = '?', cookId = '?', createDate = '?'" +
-        ", updateDate = '?', name = '?', description = '?', allergenes = '?'" +
-        "Where name = '?' and cookId = '?'";
+        let sql = "Update meal Set isActive = ?,  isVega = ?, isVegan = ?, isToTakeHome = ?, dateTime = ? " +
+        ", maxAmountOfParticipants = ?, price = ?, imageUrl = ?, cookId = ?, createDate = ?" +
+        ", updateDate = ?, name = ?, description = ?, allergenes = ?" +
+        "Where name = ? and cookId = ?";
         let getMealquery = "Select * From meal Where name = ?";
 
         if (
@@ -288,7 +288,7 @@ module.exports = {
                                     });
                                 }
                                 else {
-                                    let deletequery = "Delete From meal Where id = '" + mealid + "' and cookId = '" + cookID + "'";
+                                    let deletequery = "Delete From meal Where id = " + mealid + " and cookId = " + cookID;
             
                                     connection.query(deletequery, function(error, result) {
                                         if (error) {
